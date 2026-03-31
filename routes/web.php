@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\JournalController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -24,9 +26,8 @@ Route::get('/celebrations', function () {
     return Inertia::render('Celebration');
 })->name('celebration');
 
-Route::get('/journal', function () {
-    return Inertia::render('Journal');
-})->name('journal');
+Route::get('/journal', [JournalController::class, 'index'])->name('journal.index');
+Route::get('/journal/{slug}', [JournalController::class, 'show'])->name('journal.show');
 
 Route::get('/contact', function () {
     return Inertia::render('Contact');
@@ -36,28 +37,13 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::inertia('dashboard', 'Dashboard')->name('dashboard');
 
 
-    Route::get('/posts', function () {
-        return Inertia::render('Admin/Journal/Index');
-    })->name('journal.index');
-
-    // Show form to create a new post
-    Route::get('/posts/create', function () {
-        return Inertia::render('Admin/Journal/Create');
-    })->name('journal.create');
-
-    // Store a new post in the database
-    // Route::post('/posts', [JournalController::class, 'store'])->name('journal.store');
-
-    // Show form to edit an existing post
-    Route::get('/posts/{post}/edit', function ($post) {
-        return Inertia::render('Admin/Journal/Edit');
-    })->name('journal.edit');
-
-    // Update an existing post
-    // Route::put('/posts/{post}', [JournalController::class, 'update'])->name('journal.update');
-
-    // Delete a post
-    // Route::delete('/posts/{post}', [JournalController::class, 'destroy'])->name('journal.destroy');
+    // Admin Journal CRUD
+    Route::get('/posts', [PostController::class, 'index'])->name('admin.journal.index');
+    Route::get('/posts/create', [PostController::class, 'create'])->name('admin.journal.create');
+    Route::post('/posts', [PostController::class, 'store'])->name('admin.journal.store');
+    Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('admin.journal.edit');
+    Route::put('/posts/{post}', [PostController::class, 'update'])->name('admin.journal.update');
+    Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('admin.journal.destroy');
 
     // --- Other Admin Sections (Placeholders) ---
     // Manage Celebrations/Events Portfolio

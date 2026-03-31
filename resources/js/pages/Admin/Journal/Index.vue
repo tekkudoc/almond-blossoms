@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import {
     Plus,
     Search,
@@ -8,305 +8,228 @@ import {
     Trash2,
     Eye,
     PenTool,
+    CheckCircle,
+    X,
+    AlertCircle,
+    Image as ImageIcon
 } from 'lucide-vue-next';
-import { ref } from 'vue';
-// IMPORTANT: Make sure this path exactly matches your Admin Sidebar layout file!
-import AppLayout from '@/layouts/AppLayout.vue';
+import { ref, watch } from 'vue';
+import AppLayout from '@/layouts/app/AppSidebarLayout.vue';
 
 defineOptions({ layout: AppLayout });
 
-// DUMMY DATA
-const posts = ref([
-    {
-        id: 1,
-        title: 'Crafting the Perfect Wedding Day Timeline.',
-        category: 'Advice & Planning',
-        status: 'Published',
-        date: 'May 14, 2026',
-        views: 1240,
-        image: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=200&auto=format&fit=crop',
-    },
-    {
-        id: 2,
-        title: 'The Ultimate Wedding Day Shot List.',
-        category: 'Photography',
-        status: 'Published',
-        date: 'June 3, 2026',
-        views: 890,
-        image: 'https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=200&auto=format&fit=crop',
-    },
-    {
-        id: 3,
-        title: 'Vibrant: Styling with Colour and Tone.',
-        category: 'Styling & Design',
-        status: 'Draft',
-        date: 'July 18, 2026',
-        views: 0,
-        image: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=200&auto=format&fit=crop',
-    },
-]);
+const props = defineProps({
+    posts: Object // Expecting a paginated object
+});
 
 const searchQuery = ref('');
+
+// --- TOAST NOTIFICATION LOGIC ---
+const page = usePage();
+const flashMessage = ref(null);
+
+watch(() => page.props.flash?.success, (msg) => {
+    if (msg) {
+        flashMessage.value = msg;
+        setTimeout(() => flashMessage.value = null, 5000);
+    }
+}, { immediate: true });
+
+// --- CUSTOM DELETE MODAL LOGIC ---
+const isModalOpen = ref(false);
+const postToDelete = ref(null);
+
+const openDeleteModal = (post) => {
+    postToDelete.value = post;
+    isModalOpen.value = true;
+};
+
+const closeDeleteModal = () => {
+    isModalOpen.value = false;
+    postToDelete.value = null;
+};
+
+const confirmDelete = () => {
+    if (postToDelete.value) {
+        router.delete('/admin/posts/' + postToDelete.value.id, {
+            onSuccess: () => closeDeleteModal(),
+            preserveScroll: true,
+        });
+    }
+};
 </script>
 
 <template>
-    <Head title="Journal Management | Almond-Blossoms" />
+    <Head title="Journal Management" />
 
-    <!-- EXPLICITLY WRAPPING THE PAGE CONTENT IN THE LAYOUT -->
+    <!-- ========================================== -->
+    <!-- SUCCESS TOAST NOTIFICATION                 -->
+    <!-- ========================================== -->
+    <transition enter-active-class="transform transition duration-500 ease-out" enter-from-class="translate-y-10 opacity-0" enter-to-class="translate-y-0 opacity-100" leave-active-class="transition duration-300 ease-in" leave-from-class="opacity-100" leave-to-class="opacity-0">
+        <div v-if="flashMessage" class="fixed bottom-8 right-8 z-[100] bg-brand-wine text-brand-blush px-6 py-4 shadow-2xl rounded-sm flex items-center gap-4 border-l-4 border-brand-rose">
+            <CheckCircle class="w-5 h-5 text-brand-rose" />
+            <span class="text-xs font-semibold tracking-widest uppercase">{{ flashMessage }}</span>
+            <button @click="flashMessage = null"><X class="w-4 h-4 opacity-50 hover:opacity-100" /></button>
+        </div>
+    </transition>
 
-    <div class="mx-auto w-full max-w-7xl p-6 md:p-10">
-        <!-- Page Header -->
-        <div
-            class="mb-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center"
-        >
-            <div>
-                <h1
-                    class="mb-2 font-serif text-4xl text-brand-wine md:text-5xl"
-                >
-                    The Journal
-                </h1>
-                <p class="text-sm font-light tracking-wide text-brand-wine/60">
-                    Manage your musings, advice, and real wedding features.
+    <!-- ========================================== -->
+    <!-- CUSTOM DELETE CONFIRMATION MODAL           -->
+    <!-- ========================================== -->
+    <transition enter-active-class="ease-out duration-300" enter-from-class="opacity-0" enter-to-class="opacity-100" leave-active-class="ease-in duration-200" leave-from-class="opacity-100" leave-to-class="opacity-0">
+        <div v-if="isModalOpen" class="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <div class="absolute inset-0 bg-brand-dark/60 backdrop-blur-md" @click="closeDeleteModal"></div>
+            <div class="relative bg-brand-blush w-full max-w-md p-10 shadow-2xl border border-brand-rose/20 rounded-sm text-center">
+                <div class="w-16 h-16 bg-brand-light rounded-full flex items-center justify-center mx-auto mb-6">
+                    <AlertCircle class="w-8 h-8 text-brand-wine" />
+                </div>
+                <h2 class="font-serif text-3xl text-brand-wine mb-4">Are you certain?</h2>
+                <p class="text-brand-wine/60 font-light text-sm leading-relaxed mb-10">
+                    You are about to delete <span class="italic font-semibold">"{{ postToDelete?.title }}"</span>. This action is elegant but permanent.
                 </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button @click="closeDeleteModal" class="flex-1 px-8 py-3 border border-brand-wine/20 text-brand-wine text-[0.65rem] font-bold uppercase tracking-widest hover:bg-brand-light transition-colors">Cancel</button>
+                    <button @click="confirmDelete" class="flex-1 px-8 py-3 bg-brand-wine text-brand-blush text-[0.65rem] font-bold uppercase tracking-widest hover:bg-brand-dark transition-colors">Confirm Delete</button>
+                </div>
             </div>
+        </div>
+    </transition>
 
-            <Link
-                href="/admin/posts/create"
-                class="inline-flex items-center gap-2 rounded-sm bg-brand-wine px-6 py-3 text-xs font-semibold tracking-widest text-brand-blush uppercase shadow-md transition-colors hover:bg-brand-rose hover:text-white"
-            >
-                <Plus class="h-4 w-4" />
-                New Post
+    <!-- ========================================== -->
+    <!-- MAIN PAGE UI                               -->
+    <!-- ========================================== -->
+    <div class="p-6 md:p-10 max-w-7xl mx-auto w-full">
+
+        <!-- Page Header -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10">
+            <div>
+                <h1 class="font-serif text-4xl md:text-5xl text-brand-wine mb-2">The Journal</h1>
+                <p class="text-brand-wine/60 text-sm tracking-wide font-light">Manage your musings, advice, and real wedding features.</p>
+            </div>
+            <Link href="/admin/posts/create" class="inline-flex items-center gap-2 bg-brand-wine text-brand-blush px-6 py-3 text-xs font-semibold tracking-widest uppercase rounded-sm hover:bg-brand-rose transition-colors shadow-md">
+                <Plus class="w-4 h-4" /> New Post
             </Link>
         </div>
 
         <!-- Filters & Search Bar -->
-        <div
-            class="flex flex-col items-center justify-between gap-4 rounded-t-md border border-brand-rose/20 bg-white p-4 shadow-sm sm:flex-row"
-        >
+        <div class="bg-white rounded-t-md shadow-sm border border-brand-rose/20 p-4 flex flex-col sm:flex-row justify-between items-center gap-4">
             <!-- Search -->
             <div class="relative w-full sm:w-96">
-                <div
-                    class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
-                >
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <Search class="h-4 w-4 text-brand-wine/40" />
                 </div>
                 <input
                     v-model="searchQuery"
                     type="text"
-                    class="block w-full rounded-sm border border-brand-rose/30 bg-brand-blush/50 py-2 pr-3 pl-10 leading-5 text-brand-wine placeholder-brand-wine/40 transition-colors focus:border-brand-wine focus:ring-1 focus:ring-brand-wine focus:outline-none sm:text-sm"
+                    class="block w-full pl-10 pr-3 py-2 border border-brand-rose/30 rounded-sm leading-5 bg-brand-blush/50 placeholder-brand-wine/40 focus:outline-none focus:ring-1 focus:ring-brand-wine sm:text-sm text-brand-wine transition-colors"
                     placeholder="Search journal posts..."
                 />
             </div>
-
             <!-- Filter Button -->
-            <button
-                class="inline-flex w-full items-center justify-center gap-2 rounded-sm border border-brand-rose/30 bg-white px-4 py-2 text-xs font-semibold tracking-widest text-brand-wine uppercase transition-colors hover:bg-brand-light sm:w-auto"
-            >
-                <Filter class="h-4 w-4" />
-                Filter
+            <button class="inline-flex items-center gap-2 px-4 py-2 border border-brand-rose/30 bg-white text-brand-wine text-xs font-semibold tracking-widest uppercase rounded-sm hover:bg-brand-light transition-colors w-full sm:w-auto justify-center">
+                <Filter class="w-4 h-4" /> Filter
             </button>
         </div>
 
         <!-- Data Table -->
-        <div
-            class="overflow-x-auto rounded-b-md border border-t-0 border-brand-rose/20 bg-white shadow-sm"
-        >
+        <div class="bg-white rounded-b-md shadow-sm border border-t-0 border-brand-rose/20 overflow-x-auto">
             <table class="min-w-full divide-y divide-brand-rose/20">
                 <thead class="bg-brand-light/50">
-                    <tr>
-                        <th
-                            scope="col"
-                            class="px-6 py-4 text-left text-[0.65rem] font-semibold tracking-widest text-brand-wine uppercase"
-                        >
-                            Article
-                        </th>
-                        <th
-                            scope="col"
-                            class="px-6 py-4 text-left text-[0.65rem] font-semibold tracking-widest text-brand-wine uppercase"
-                        >
-                            Category
-                        </th>
-                        <th
-                            scope="col"
-                            class="px-6 py-4 text-left text-[0.65rem] font-semibold tracking-widest text-brand-wine uppercase"
-                        >
-                            Status
-                        </th>
-                        <th
-                            scope="col"
-                            class="px-6 py-4 text-left text-[0.65rem] font-semibold tracking-widest text-brand-wine uppercase"
-                        >
-                            Date
-                        </th>
-                        <th
-                            scope="col"
-                            class="px-6 py-4 text-left text-[0.65rem] font-semibold tracking-widest text-brand-wine uppercase"
-                        >
-                            Views
-                        </th>
-                        <th
-                            scope="col"
-                            class="px-6 py-4 text-right text-[0.65rem] font-semibold tracking-widest text-brand-wine uppercase"
-                        >
-                            Actions
-                        </th>
-                    </tr>
+                <tr>
+                    <th class="px-6 py-4 text-left text-[0.65rem] font-semibold text-brand-wine uppercase tracking-widest">Article</th>
+                    <th class="px-6 py-4 text-left text-[0.65rem] font-semibold text-brand-wine uppercase tracking-widest">Category</th>
+                    <th class="px-6 py-4 text-left text-[0.65rem] font-semibold text-brand-wine uppercase tracking-widest">Status</th>
+                    <th class="px-6 py-4 text-left text-[0.65rem] font-semibold text-brand-wine uppercase tracking-widest">Date</th>
+                    <th class="px-6 py-4 text-left text-[0.65rem] font-semibold text-brand-wine uppercase tracking-widest">Views</th>
+                    <th class="px-6 py-4 text-right text-[0.65rem] font-semibold text-brand-wine uppercase tracking-widest">Actions</th>
+                </tr>
                 </thead>
 
-                <tbody
-                    v-if="posts.length > 0"
-                    class="divide-y divide-brand-rose/10 bg-white"
-                >
-                    <tr
-                        v-for="post in posts"
-                        :key="post.id"
-                        class="group transition-colors hover:bg-brand-light/30"
-                    >
-                        <!-- Image & Title -->
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="flex items-center">
-                                <div
-                                    class="h-12 w-12 flex-shrink-0 overflow-hidden rounded-sm border border-brand-rose/20"
-                                >
-                                    <img
-                                        :src="post.image"
-                                        alt=""
-                                        class="h-full w-full object-cover"
-                                    />
-                                </div>
-                                <div class="ml-4">
-                                    <div
-                                        class="font-serif text-lg font-semibold text-brand-wine"
-                                    >
-                                        {{ post.title }}
-                                    </div>
-                                    <div
-                                        class="mt-0.5 text-xs font-light text-brand-wine/50"
-                                    >
-                                        ID: #{{
-                                            String(post.id).padStart(4, '0')
-                                        }}
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
+                <tbody v-if="posts?.data?.length > 0" class="bg-white divide-y divide-brand-rose/10">
+                <tr v-for="post in posts.data" :key="post.id" class="hover:bg-brand-light/30 transition-colors group">
 
-                        <!-- Category -->
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span
-                                class="inline-flex rounded-full border border-brand-rose/20 bg-brand-light px-2.5 py-1 text-[0.65rem] leading-5 font-semibold tracking-widest text-brand-wine uppercase"
-                            >
+                    <!-- Image & Title -->
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 h-12 w-12 rounded-sm overflow-hidden border border-brand-rose/20 bg-brand-light">
+                                <img v-if="post.image" :src="post.image" class="h-full w-full object-cover" />
+                                <ImageIcon v-else class="w-4 h-4 text-brand-rose/50 m-auto mt-4" />
+                            </div>
+                            <div class="ml-4">
+                                <div class="font-serif font-semibold text-brand-wine text-lg">{{ post.title }}</div>
+                            </div>
+                        </div>
+                    </td>
+
+                    <!-- Category -->
+                    <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex rounded-full border border-brand-rose/20 bg-brand-light/50 px-2.5 py-1 text-[0.65rem] leading-5 font-semibold tracking-widest text-brand-wine uppercase">
                                 {{ post.category }}
                             </span>
-                        </td>
+                    </td>
 
-                        <!-- Status Badge -->
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span
-                                v-if="post.status === 'Published'"
-                                class="inline-flex rounded-full bg-green-100 px-2.5 py-1 text-[0.65rem] leading-5 font-semibold tracking-widest text-green-800 uppercase"
-                            >
+                    <!-- Status Badge -->
+                    <td class="px-6 py-4 whitespace-nowrap">
+                            <span v-if="post.status === 'published'" class="inline-flex rounded-full border border-green-200 bg-green-50 px-2.5 py-1 text-[0.65rem] leading-5 font-semibold tracking-widest text-green-700 uppercase">
                                 Published
                             </span>
-                            <span
-                                v-else
-                                class="inline-flex rounded-full bg-gray-100 px-2.5 py-1 text-[0.65rem] leading-5 font-semibold tracking-widest text-gray-800 uppercase"
-                            >
+                        <span v-else class="inline-flex rounded-full border border-gray-200 bg-gray-50 px-2.5 py-1 text-[0.65rem] leading-5 font-semibold tracking-widest text-gray-600 uppercase">
                                 Draft
                             </span>
-                        </td>
+                    </td>
 
-                        <!-- Date -->
-                        <td
-                            class="px-6 py-4 text-sm font-light whitespace-nowrap text-brand-wine/70"
-                        >
-                            {{ post.date }}
-                        </td>
+                    <!-- Date -->
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-brand-wine/70 font-light">
+                        {{ post.date }}
+                    </td>
 
-                        <!-- Views -->
-                        <td
-                            class="px-6 py-4 text-sm font-light whitespace-nowrap text-brand-wine/70"
-                        >
-                            {{ post.views.toLocaleString() }}
-                        </td>
+                    <!-- Views -->
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-brand-wine/70 font-light">
+                        {{ post.views?.toLocaleString() || 0 }}
+                    </td>
 
-                        <!-- Actions -->
-                        <td
-                            class="px-6 py-4 text-right text-sm font-medium whitespace-nowrap"
-                        >
-                            <div
-                                class="flex items-center justify-end gap-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                            >
-                                <a
-                                    href="#"
-                                    class="text-brand-mauve transition-colors hover:text-brand-wine"
-                                    title="View Public Page"
-                                >
-                                    <Eye class="h-4 w-4" />
-                                </a>
-                                <Link
-                                    href="#"
-                                    class="text-brand-rose transition-colors hover:text-brand-wine"
-                                    title="Edit Post"
-                                >
-                                    <Edit class="h-4 w-4" />
-                                </Link>
-                                <button
-                                    class="text-red-400 transition-colors hover:text-red-600"
-                                    title="Delete Post"
-                                >
-                                    <Trash2 class="h-4 w-4" />
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                    <!-- Actions -->
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <div class="flex items-center justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <a :href="'/journal/' + post.slug" target="_blank" class="text-brand-mauve hover:text-brand-wine transition-colors" title="View Public Page">
+                                <Eye class="w-4 h-4" />
+                            </a>
+                            <Link :href="'/admin/posts/' + post.id + '/edit'" class="text-brand-rose hover:text-brand-wine transition-colors" title="Edit Post">
+                                <Edit class="w-4 h-4" />
+                            </Link>
+                            <button @click="openDeleteModal(post)" class="text-red-400 hover:text-red-600 transition-colors" title="Delete Post">
+                                <Trash2 class="w-4 h-4" />
+                            </button>
+                        </div>
+                    </td>
+                </tr>
                 </tbody>
             </table>
 
-            <!-- Empty State (if no posts) -->
-            <div v-if="posts.length === 0" class="py-16 text-center">
-                <PenTool class="mx-auto mb-4 h-12 w-12 text-brand-rose/30" />
-                <h3 class="font-serif text-lg text-brand-wine">
-                    No journal posts yet
-                </h3>
-                <p class="mt-1 mb-6 text-sm font-light text-brand-wine/60">
-                    Get started by creating your first article.
-                </p>
-                <Link
-                    href="/admin/posts/create"
-                    class="inline-flex items-center gap-2 rounded-sm bg-brand-wine px-6 py-3 text-xs font-semibold tracking-widest text-brand-blush uppercase transition-colors hover:bg-brand-rose"
-                >
-                    <Plus class="h-4 w-4" />
-                    New Post
+            <!-- Empty State -->
+            <div v-if="!posts?.data || posts.data.length === 0" class="text-center py-16">
+                <PenTool class="mx-auto h-12 w-12 text-brand-rose/30 mb-4" />
+                <h3 class="text-lg font-serif text-brand-wine">No journal posts yet</h3>
+                <p class="mt-1 text-sm text-brand-wine/60 font-light mb-6">Get started by creating your first article.</p>
+                <Link href="/admin/posts/create" class="inline-flex items-center gap-2 bg-brand-wine text-brand-blush px-6 py-3 text-xs font-semibold tracking-widest uppercase rounded-sm hover:bg-brand-rose transition-colors">
+                    <Plus class="w-4 h-4" /> New Post
                 </Link>
             </div>
         </div>
 
-        <!-- Pagination -->
-        <div
-            v-if="posts.length > 0"
-            class="mt-6 flex items-center justify-between text-sm font-light text-brand-wine/60"
-        >
-            <p>
-                Showing
-                <span class="font-semibold text-brand-wine">1</span> to
-                <span class="font-semibold text-brand-wine">3</span> of
-                <span class="font-semibold text-brand-wine">3</span> results
-            </p>
+        <!-- ========================================== -->
+        <!-- PAGINATION                                 -->
+        <!-- ========================================== -->
+        <div v-if="posts?.data?.length > 0 && posts.meta" class="mt-6 flex items-center justify-between text-sm text-brand-wine/60 font-light">
+            <p>Showing <span class="font-semibold text-brand-wine">{{ posts.meta.from }}</span> to <span class="font-semibold text-brand-wine">{{ posts.meta.to }}</span> of <span class="font-semibold text-brand-wine">{{ posts.meta.total }}</span> results</p>
             <div class="flex gap-2">
-                <button
-                    disabled
-                    class="cursor-not-allowed rounded-sm border border-brand-rose/20 px-3 py-1 text-[0.65rem] font-semibold tracking-widest uppercase opacity-50"
-                >
-                    Previous
-                </button>
-                <button
-                    disabled
-                    class="cursor-not-allowed rounded-sm border border-brand-rose/20 px-3 py-1 text-[0.65rem] font-semibold tracking-widest uppercase opacity-50"
-                >
-                    Next
-                </button>
+                <Link v-if="posts.links.prev" :href="posts.links.prev" class="px-3 py-1 border border-brand-rose/20 rounded-sm hover:bg-brand-light transition-colors uppercase text-[0.65rem] tracking-widest font-semibold text-brand-wine">Previous</Link>
+                <button v-else disabled class="px-3 py-1 border border-brand-rose/20 rounded-sm opacity-50 cursor-not-allowed uppercase text-[0.65rem] tracking-widest font-semibold">Previous</button>
+
+                <Link v-if="posts.links.next" :href="posts.links.next" class="px-3 py-1 border border-brand-rose/20 rounded-sm hover:bg-brand-light transition-colors uppercase text-[0.65rem] tracking-widest font-semibold text-brand-wine">Next</Link>
+                <button v-else disabled class="px-3 py-1 border border-brand-rose/20 rounded-sm opacity-50 cursor-not-allowed uppercase text-[0.65rem] tracking-widest font-semibold">Next</button>
             </div>
         </div>
+
     </div>
 </template>
