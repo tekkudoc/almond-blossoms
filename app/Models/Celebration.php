@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class Inquiry extends Model
+class Celebration extends Model
 {
     protected $guarded = [];
 
@@ -24,4 +24,9 @@ class Inquiry extends Model
         });
     }
 
+    // Helper accessor for the full image URL
+    public function getImageUrlAttribute()
+    {
+        return $this->featured_image ? asset('storage/' . $this->featured_image) : null;
+    }
 }

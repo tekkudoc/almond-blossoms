@@ -16,39 +16,53 @@ type Props = {
     user: User;
 };
 
-const handleLogout = () => {
-    router.flushAll();
-};
+// This logout handler is not needed as Inertia's method="post" handles this.
+// const handleLogout = () => {
+//     router.flushAll();
+// };
 
 defineProps<Props>();
 </script>
 
 <template>
-    <DropdownMenuLabel class="p-0 font-normal">
-        <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+    <!-- Label section for user info -->
+    <DropdownMenuLabel class="px-3 pt-2 pb-3 font-normal">
+        <div class="flex items-center gap-3 text-left">
             <UserInfo :user="user" :show-email="true" />
         </div>
     </DropdownMenuLabel>
-    <DropdownMenuSeparator />
-    <DropdownMenuGroup>
-        <DropdownMenuItem :as-child="true">
-            <Link class="block w-full cursor-pointer" :href="edit()" prefetch>
-                <Settings class="mr-2 h-4 w-4" />
-                Settings
+
+    <DropdownMenuSeparator class="my-1 h-px bg-brand-rose/20" />
+
+    <!-- Action items -->
+    <DropdownMenuGroup class="p-1">
+        <DropdownMenuItem as-child>
+            <Link :href="edit()" class="user-dropdown-item">
+                <Settings class="size-4 text-brand-rose/70" />
+                <span>Settings</span>
             </Link>
         </DropdownMenuItem>
     </DropdownMenuGroup>
-    <DropdownMenuSeparator />
-    <DropdownMenuItem :as-child="true">
+
+    <DropdownMenuSeparator class="my-1 h-px bg-brand-rose/20" />
+
+    <DropdownMenuItem as-child>
         <Link
-            class="block w-full cursor-pointer"
             :href="logout()"
-            @click="handleLogout"
+            method="post"
             as="button"
             data-test="logout-button"
+            class="user-dropdown-item w-full"
         >
-            <LogOut class="mr-2 h-4 w-4" />
-            Log out
+            <LogOut class="size-4 text-brand-rose/70" />
+            <span>Log out</span>
         </Link>
     </DropdownMenuItem>
 </template>
+
+<style scoped>
+/* Ensure any local styles are overriden by the parent's global classes */
+.user-dropdown-item {
+    cursor: pointer;
+}
+</style>

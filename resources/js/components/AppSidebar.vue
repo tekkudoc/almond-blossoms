@@ -10,7 +10,6 @@ import {
 } from 'lucide-vue-next';
 import {
     Sidebar,
-    // ❌ Remove SidebarProvider from here
     SidebarContent,
     SidebarFooter,
     SidebarHeader,
@@ -29,7 +28,7 @@ import type { NavItem } from '@/types';
 const mainNavItems: NavItem[] = [
     { title: 'Overview', href: dashboard(), icon: LayoutGrid },
     { title: 'The Journal', href: '/admin/posts', icon: PenTool },
-    { title: 'Celebrations', href: '/admin/events', icon: CalendarHeart },
+    { title: 'Celebrations', href: '/admin/celebrations', icon: CalendarHeart },
     { title: 'Inquiries', href: '/admin/inquiries', icon: Users },
 ];
 
@@ -40,7 +39,6 @@ const footerNavItems: NavItem[] = [
 </script>
 
 <template>
-    <!-- ❌ No SidebarProvider here — it lives in AppSidebarLayout.vue -->
     <Sidebar
         collapsible="icon"
         variant="sidebar"

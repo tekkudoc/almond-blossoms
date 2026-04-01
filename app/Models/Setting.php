@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class Inquiry extends Model
+class Setting extends Model
 {
     protected $guarded = [];
 
@@ -23,5 +23,4 @@ class Inquiry extends Model
             }
         });
     }
-
 }

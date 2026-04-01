@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('inquiries', function (Blueprint $table) {
+        Schema::create('settings', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
-            $table->string('email');
-            $table->string('phone')->nullable();
-            $table->string('event_date')->nullable();
-            $table->string('event_type');
-            $table->text('message');
-            $table->string('status')->default('unread');
+            $table->string('key')->unique();
+            $table->text('value')->nullable();
+            $table->string('group')->default('general');
             $table->timestamps();
         });
     }
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('inquiries');
+        Schema::dropIfExists('settings');
     }
 };

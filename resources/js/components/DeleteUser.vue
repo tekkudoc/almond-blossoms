@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { Form } from '@inertiajs/vue3';
 import { useTemplateRef } from 'vue';
+import { AlertTriangle, Trash2 } from 'lucide-vue-next';
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
-import Heading from '@/components/Heading.vue';
 import InputError from '@/components/InputError.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
-import { Button } from '@/components/ui/button';
 import {
     Dialog,
     DialogClose,
@@ -16,75 +15,116 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
-import { Label } from '@/components/ui/label';
 
 const passwordInput = useTemplateRef('passwordInput');
 </script>
 
 <template>
-    <div class="space-y-6">
-        <Heading
-            variant="small"
-            title="Delete account"
-            description="Delete your account and all of its resources"
-        />
+    <div class="mt-16 w-full">
+        <!-- Section Header -->
+        <div class="mb-6 flex items-center gap-3 border-b border-red-200 pb-4">
+            <AlertTriangle class="h-5 w-5 text-red-500" />
+            <h2 class="font-serif text-2xl text-brand-wine">Danger Zone</h2>
+        </div>
+
+        <!-- The Warning Card -->
         <div
-            class="space-y-4 rounded-lg border border-red-100 bg-red-50 p-4 dark:border-red-200/10 dark:bg-red-700/10"
+            class="flex flex-col items-start justify-between gap-8 rounded-lg border border-red-200 bg-red-50/50 p-8 shadow-[0_10px_40px_-10px_rgba(220,38,38,0.05)] sm:p-10 md:flex-row md:items-center"
         >
-            <div class="relative space-y-0.5 text-red-600 dark:text-red-100">
-                <p class="font-medium">Warning</p>
-                <p class="text-sm">
-                    Please proceed with caution, this cannot be undone.
+            <div class="max-w-lg">
+                <h3
+                    class="mb-2 text-sm font-bold tracking-widest text-red-700 uppercase"
+                >
+                    Delete Account
+                </h3>
+                <p
+                    class="text-sm leading-relaxed font-light text-brand-wine/70"
+                >
+                    Once your account is deleted, all of its resources, journal
+                    posts, and inquiry data will be permanently deleted. Please
+                    proceed with extreme caution.
                 </p>
             </div>
+
             <Dialog>
                 <DialogTrigger as-child>
-                    <Button variant="destructive" data-test="delete-user-button"
-                        >Delete account</Button
+                    <button
+                        data-test="delete-user-button"
+                        class="inline-flex shrink-0 items-center gap-2 rounded-sm border border-red-200 bg-white px-8 py-3.5 text-[0.65rem] font-bold tracking-[0.2em] text-red-600 uppercase shadow-sm transition-all hover:border-red-600 hover:bg-red-600 hover:text-white"
                     >
+                        <Trash2 class="h-4 w-4" /> Delete Account
+                    </button>
                 </DialogTrigger>
-                <DialogContent>
+
+                <!-- BRANDED DIALOG CONTENT -->
+                <DialogContent
+                    class="rounded-sm border border-brand-rose/30 bg-brand-blush p-8 shadow-2xl sm:max-w-md sm:p-10"
+                >
                     <Form
                         v-bind="ProfileController.destroy.form()"
                         reset-on-success
                         @error="() => passwordInput?.focus()"
-                        :options="{
-                            preserveScroll: true,
-                        }"
-                        class="space-y-6"
+                        :options="{ preserveScroll: true }"
+                        class="space-y-8"
                         v-slot="{ errors, processing, reset, clearErrors }"
                     >
-                        <DialogHeader class="space-y-3">
-                            <DialogTitle
-                                >Are you sure you want to delete your
-                                account?</DialogTitle
+                        <DialogHeader
+                            class="mb-2 flex flex-col items-center justify-center"
+                        >
+                            <!-- Warning Icon -->
+                            <div
+                                class="mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-red-100 bg-red-50 shadow-sm"
                             >
-                            <DialogDescription>
-                                Once your account is deleted, all of its
-                                resources and data will also be permanently
-                                deleted. Please enter your password to confirm
-                                you would like to permanently delete your
-                                account.
+                                <AlertTriangle class="h-8 w-8 text-red-500" />
+                            </div>
+
+                            <DialogTitle
+                                class="mb-3 text-center font-serif text-3xl font-normal text-brand-wine"
+                            >
+                                Are you absolutely sure?
+                            </DialogTitle>
+
+                            <DialogDescription
+                                class="mx-auto max-w-sm text-center text-sm leading-relaxed font-light text-brand-wine/70"
+                            >
+                                Once your account is deleted, all of your data
+                                will be permanently removed. Please enter your
+                                password to confirm this action.
                             </DialogDescription>
                         </DialogHeader>
 
-                        <div class="grid gap-2">
-                            <Label for="password" class="sr-only"
-                                >Password</Label
+                        <!-- Password Input -->
+                        <div
+                            class="w-full space-y-2 border-t border-brand-rose/20 pt-4"
+                        >
+                            <label
+                                for="password"
+                                class="mb-2 block text-[0.65rem] font-bold tracking-widest text-brand-wine/80 uppercase"
                             >
+                                Confirm Password
+                            </label>
+
                             <PasswordInput
                                 id="password"
                                 name="password"
                                 ref="passwordInput"
-                                placeholder="Password"
+                                class="w-full rounded-sm border border-brand-rose/30 bg-white p-4 text-sm font-light shadow-inner outline-none focus:ring-1 focus:ring-brand-wine"
+                                placeholder="Enter your password..."
                             />
-                            <InputError :message="errors.password" />
+                            <InputError
+                                class="mt-2 text-xs text-red-500"
+                                :message="errors.password"
+                            />
                         </div>
 
-                        <DialogFooter class="gap-2">
+                        <!-- Dialog Actions -->
+                        <DialogFooter
+                            class="flex w-full flex-col gap-4 pt-2 sm:flex-row sm:gap-2"
+                        >
                             <DialogClose as-child>
-                                <Button
-                                    variant="secondary"
+                                <button
+                                    type="button"
+                                    class="flex-1 rounded-sm border border-brand-rose/50 px-6 py-3 text-[0.65rem] font-bold tracking-[0.2em] text-brand-wine uppercase transition-all hover:bg-brand-light"
                                     @click="
                                         () => {
                                             clearErrors();
@@ -93,17 +133,21 @@ const passwordInput = useTemplateRef('passwordInput');
                                     "
                                 >
                                     Cancel
-                                </Button>
+                                </button>
                             </DialogClose>
 
-                            <Button
+                            <button
                                 type="submit"
-                                variant="destructive"
                                 :disabled="processing"
                                 data-test="confirm-delete-user-button"
+                                class="flex-1 rounded-sm bg-red-700 px-6 py-3 text-[0.65rem] font-bold tracking-[0.2em] text-white uppercase shadow-md transition-all hover:bg-red-800 disabled:opacity-50"
                             >
-                                Delete account
-                            </Button>
+                                {{
+                                    processing
+                                        ? 'Deleting...'
+                                        : 'Delete Account'
+                                }}
+                            </button>
                         </DialogFooter>
                     </Form>
                 </DialogContent>
