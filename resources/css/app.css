@@ -71,11 +71,12 @@
         100% { overflow-x: hidden; overflow-y: auto; }
     }
 
-    /* UI Reveal Animations */
+    /* --- Header Slide Down --- */
+    /* Starts right as the preloader fades out at ~4s */
     .header-slide-down {
         opacity: 0;
         transform: translateY(-100%);
-        animation: slideDown 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) 3.8s forwards;
+        animation: slideDown 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 4s forwards;
         will-change: transform, opacity;
     }
     @keyframes slideDown {
@@ -83,9 +84,21 @@
         to { opacity: 1; transform: translateY(0); }
     }
 
+    /* FIX: Applied when header_animated is already set in sessionStorage.
+       Without this, the header has no opacity value and stays invisible
+       because the animation keyframes default it to opacity:0. */
+    .header-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* --- FIX: fade-up now has NO default delay.
+         Each element that uses .fade-up must set its own
+         animation-delay via an inline style or a named modifier.
+         This makes individual staggering actually work. --- */
     .fade-up {
         opacity: 0;
-        animation: fadeUp 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        animation: fadeUp 1.0s cubic-bezier(0.2, 0.8, 0.2, 1) both;
         will-change: transform, opacity;
     }
     @keyframes fadeUp {
@@ -93,9 +106,19 @@
         to { opacity: 1; transform: translateY(0); }
     }
 
+    /* --- Named stagger helpers so template stays clean.
+         Base offset: 4.2s (right after header at 4s + 0.2s).
+         Each step adds 0.2s. --- */
+    .fade-up-1 { animation-delay: 4.2s; }
+    .fade-up-2 { animation-delay: 4.4s; }
+    .fade-up-3 { animation-delay: 4.6s; }
+    .fade-up-4 { animation-delay: 4.8s; }
+    .fade-up-5 { animation-delay: 5.0s; }
+
+    /* Image reveal — delayed to start after preloader */
     .image-reveal {
         clip-path: inset(0 100% 0 0);
-        animation: revealRight 1.5s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        animation: revealRight 1.5s cubic-bezier(0.77, 0, 0.175, 1) 4.2s forwards;
     }
     @keyframes revealRight {
         to { clip-path: inset(0 0 0 0); }

@@ -2,7 +2,6 @@
 import { Head, Link } from '@inertiajs/vue3';
 import PublicLayout from '@/Layouts/PublicLayout.vue';
 
-// 1. This handles the layout perfectly!
 defineOptions({
     layout: PublicLayout,
 });
@@ -11,15 +10,17 @@ defineOptions({
 <template>
     <Head title="Services | Almond-Blossoms Events" />
 
-    <!-- 2. NO <PublicLayout> tags here! Just a standard div or section -->
     <div>
-        <!-- HERO SECTION -->
+        <!-- ============================================ -->
+        <!-- HERO                                         -->
+        <!-- ============================================ -->
         <section
-            class="fade-up relative mt-24 flex h-[75vh] flex-col items-center justify-center px-6 text-center"
+            class="fade-up relative flex min-h-[75vh] flex-col items-center justify-center px-6 pt-32 pb-20 text-center"
+            style="animation-delay: 4.2s"
         >
-            <!-- Subtle Watermark -->
+            <!-- Watermark -->
             <div
-                class="pointer-events-none absolute top-1/2 left-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 transform font-serif text-[20vw] leading-none text-brand-rose/5 italic select-none"
+                class="pointer-events-none absolute top-1/2 left-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 select-none font-serif text-[20vw] leading-none text-brand-rose/5 italic"
             >
                 Services
             </div>
@@ -31,59 +32,64 @@ defineOptions({
             </span>
 
             <h1
-                class="mx-auto mb-8 max-w-5xl font-serif text-5xl leading-[1.1] text-brand-wine md:text-7xl lg:text-8xl"
+                class="mx-auto mb-8 max-w-5xl font-serif text-4xl leading-[1.1] text-brand-wine sm:text-5xl md:text-7xl lg:text-8xl"
             >
-                Just The Two Of Us <br />
+                Just The Two Of Us
+                <br />
                 <span class="font-light text-brand-mauve italic"
-                    >& Our Loved Ones</span
+                >&amp; Our Loved Ones</span
                 >
             </h1>
 
             <p
-                class="mx-auto max-w-2xl text-lg leading-relaxed font-light text-brand-wine/70"
+                class="mx-auto max-w-2xl text-base leading-relaxed font-light text-brand-wine/70 sm:text-lg"
             >
-                We appreciate that no two weddings are the same. Not everyone is
-                in need of full design. We delight in encouraging you to choose
-                the exact level of support that meets your unique vision.
+                We appreciate that no two weddings are the same. Not everyone
+                is in need of full design. We delight in encouraging you to
+                choose the exact level of support that meets your unique vision.
             </p>
 
-            <!-- Scroll prompt -->
+            <!-- Scroll prompt — hidden on mobile, no bounce -->
             <div
-                class="absolute bottom-10 flex hidden animate-bounce flex-col items-center md:flex"
+                class="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center sm:flex"
             >
                 <span
                     class="mb-2 text-[0.65rem] tracking-widest text-brand-mauve uppercase"
-                    >Scroll to Discover</span
+                >Scroll to Discover</span
                 >
                 <div class="h-10 w-px bg-brand-rose"></div>
             </div>
         </section>
 
-        <!-- THE CINEMATIC STACK -->
+        <!-- ============================================ -->
+        <!-- CINEMATIC STACK                              -->
+        <!-- ============================================ -->
         <div class="relative w-full">
-            <!-- 01. WEDDINGS -->
+
+            <!-- 01 — WEDDINGS -->
             <section
-                class="relative z-10 flex h-auto w-full flex-col items-center justify-center overflow-hidden bg-brand-light shadow-[0_-10px_40px_rgba(0,0,0,0.05)] md:sticky md:top-0 md:h-[100svh] md:flex-row"
+                class="relative z-10 flex w-full flex-col overflow-hidden bg-brand-light shadow-[0_-10px_40px_rgba(0,0,0,0.05)] md:sticky md:top-0 md:h-[100svh] md:flex-row md:items-stretch"
             >
+                <!-- Text half -->
                 <div
-                    class="relative flex h-auto w-full flex-col justify-center p-12 md:h-full md:w-1/2 lg:p-24"
+                    class="relative flex w-full flex-col justify-center p-8 py-16 md:h-full md:w-1/2 lg:p-24"
                 >
                     <span
-                        class="pointer-events-none absolute top-20 left-12 font-serif text-[12rem] leading-none text-brand-rose/10 italic select-none lg:left-24"
-                        >01</span
+                        class="pointer-events-none absolute top-12 left-8 select-none font-serif text-[8rem] leading-none text-brand-rose/10 italic sm:text-[12rem] lg:left-24"
+                    >01</span
                     >
                     <div class="relative z-10">
                         <span
                             class="mb-6 block w-max border-b border-brand-rose/30 pb-2 text-xs font-semibold tracking-[0.25em] text-brand-rose uppercase"
-                            >Bespoke Planning</span
+                        >Bespoke Planning</span
                         >
                         <h2
-                            class="mb-8 font-serif text-6xl leading-none text-brand-wine lg:text-7xl"
+                            class="mb-8 font-serif text-5xl leading-none text-brand-wine lg:text-7xl"
                         >
                             Weddings.
                         </h2>
                         <p
-                            class="mb-10 max-w-md text-lg leading-relaxed font-light text-brand-wine/80"
+                            class="mb-10 max-w-md text-base leading-relaxed font-light text-brand-wine/80 sm:text-lg"
                         >
                             Our signature planning service. We handle the
                             logistics, aesthetics, and endless details from
@@ -96,13 +102,15 @@ defineOptions({
                         >
                             <span>Explore Weddings</span>
                             <div
-                                class="h-[1px] w-12 bg-brand-wine transition-all duration-400 group-hover:w-16 group-hover:bg-brand-rose"
+                                class="h-px w-12 bg-brand-wine transition-all duration-500 group-hover:w-16 group-hover:bg-brand-rose"
                             ></div>
                         </Link>
                     </div>
                 </div>
+
+                <!-- Image half -->
                 <div
-                    class="group h-[50vh] w-full overflow-hidden md:h-full md:w-1/2"
+                    class="img-zoom-container group h-64 w-full flex-shrink-0 md:h-full md:w-1/2"
                 >
                     <img
                         src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200"
@@ -112,31 +120,32 @@ defineOptions({
                 </div>
             </section>
 
-            <!-- 02. CELEBRATIONS -->
+            <!-- 02 — CELEBRATIONS -->
             <section
-                class="relative z-20 flex h-auto w-full flex-col items-center justify-center overflow-hidden bg-brand-wine text-brand-light shadow-[0_-20px_50px_rgba(0,0,0,0.3)] md:sticky md:top-0 md:h-[100svh] md:flex-row-reverse"
+                class="relative z-20 flex w-full flex-col overflow-hidden bg-brand-wine text-brand-light shadow-[0_-20px_50px_rgba(0,0,0,0.3)] md:sticky md:top-0 md:h-[100svh] md:flex-row-reverse md:items-stretch"
             >
+                <!-- Text half -->
                 <div
-                    class="relative flex h-auto w-full flex-col justify-center p-12 md:h-full md:w-1/2 lg:p-24"
+                    class="relative flex w-full flex-col justify-center p-8 py-16 md:h-full md:w-1/2 lg:p-24"
                 >
                     <span
-                        class="pointer-events-none absolute top-20 right-12 font-serif text-[12rem] leading-none text-brand-rose/5 italic select-none lg:right-24"
-                        >02</span
+                        class="pointer-events-none absolute top-12 right-8 select-none font-serif text-[8rem] leading-none text-brand-rose/5 italic sm:text-[12rem] lg:right-24"
+                    >02</span
                     >
                     <div
                         class="relative z-10 flex flex-col md:ml-auto md:items-end md:text-right"
                     >
                         <span
                             class="mb-6 block w-max border-b border-brand-rose/30 pb-2 text-xs font-semibold tracking-[0.25em] text-brand-rose uppercase"
-                            >Exclusive Soirées</span
+                        >Exclusive Soirées</span
                         >
                         <h2
-                            class="mb-8 font-serif text-6xl leading-none text-brand-blush lg:text-7xl"
+                            class="mb-8 font-serif text-5xl leading-none text-brand-blush lg:text-7xl"
                         >
                             Celebrations.
                         </h2>
                         <p
-                            class="mb-10 max-w-md text-lg leading-relaxed font-light text-brand-light/80"
+                            class="mb-10 max-w-md text-base leading-relaxed font-light text-brand-light/80 sm:text-lg"
                         >
                             From milestone birthdays to intimate private
                             dinners. We design spectacular and flawless events
@@ -148,13 +157,15 @@ defineOptions({
                         >
                             <span>Explore Events</span>
                             <div
-                                class="h-[1px] w-12 bg-brand-blush transition-all duration-400 group-hover:w-16 group-hover:bg-brand-rose"
+                                class="h-px w-12 bg-brand-blush transition-all duration-500 group-hover:w-16 group-hover:bg-brand-rose"
                             ></div>
                         </Link>
                     </div>
                 </div>
+
+                <!-- Image half -->
                 <div
-                    class="group relative h-[50vh] w-full overflow-hidden md:h-full md:w-1/2"
+                    class="img-zoom-container group relative h-64 w-full flex-shrink-0 md:h-full md:w-1/2"
                 >
                     <div
                         class="absolute inset-0 z-10 bg-brand-dark/20 transition-colors duration-1000 group-hover:bg-transparent"
@@ -167,48 +178,51 @@ defineOptions({
                 </div>
             </section>
 
-            <!-- 03. CRECHE -->
+            <!-- 03 — CRECHE -->
             <section
-                class="relative z-30 flex h-auto w-full flex-col items-center justify-center overflow-hidden bg-brand-blush shadow-[0_-20px_50px_rgba(0,0,0,0.15)] md:sticky md:top-0 md:h-[100svh] md:flex-row"
+                class="relative z-30 flex w-full flex-col overflow-hidden bg-brand-blush shadow-[0_-20px_50px_rgba(0,0,0,0.15)] md:sticky md:top-0 md:h-[100svh] md:flex-row md:items-stretch"
             >
+                <!-- Text half -->
                 <div
-                    class="relative flex h-auto w-full flex-col justify-center p-12 md:h-full md:w-1/2 lg:p-24"
+                    class="relative flex w-full flex-col justify-center p-8 py-16 md:h-full md:w-1/2 lg:p-24"
                 >
                     <span
-                        class="pointer-events-none absolute top-20 left-12 font-serif text-[12rem] leading-none text-brand-rose/10 italic select-none lg:left-24"
-                        >03</span
+                        class="pointer-events-none absolute top-12 left-8 select-none font-serif text-[8rem] leading-none text-brand-rose/10 italic sm:text-[12rem] lg:left-24"
+                    >03</span
                     >
                     <div class="relative z-10">
                         <span
                             class="mb-6 block w-max border-b border-brand-rose/30 pb-2 text-xs font-semibold tracking-[0.25em] text-brand-rose uppercase"
-                            >Dedicated Childcare</span
+                        >Dedicated Childcare</span
                         >
                         <h2
-                            class="mb-8 font-serif text-6xl leading-none text-brand-wine lg:text-7xl"
+                            class="mb-8 font-serif text-5xl leading-none text-brand-wine lg:text-7xl"
                         >
                             Event Creche.
                         </h2>
                         <p
-                            class="mb-10 max-w-md text-lg leading-relaxed font-light text-brand-wine/80"
+                            class="mb-10 max-w-md text-base leading-relaxed font-light text-brand-wine/80 sm:text-lg"
                         >
                             Professional, high-quality childcare ensuring your
                             youngest guests are entertained safely and
-                            joyfully—giving parents the ultimate gift: peace of
-                            mind.
+                            joyfully — giving parents the ultimate gift: peace
+                            of mind.
                         </p>
                         <Link
                             href="/contact"
                             class="group inline-flex items-center gap-4 text-xs tracking-widest text-brand-wine uppercase transition-colors hover:text-brand-rose"
                         >
-                            <span>Explore Creche</span>
+                            <span>Enquire About Creche</span>
                             <div
-                                class="h-[1px] w-12 bg-brand-wine transition-all duration-400 group-hover:w-16 group-hover:bg-brand-rose"
+                                class="h-px w-12 bg-brand-wine transition-all duration-500 group-hover:w-16 group-hover:bg-brand-rose"
                             ></div>
                         </Link>
                     </div>
                 </div>
+
+                <!-- Image half -->
                 <div
-                    class="group h-[50vh] w-full overflow-hidden md:h-full md:w-1/2"
+                    class="img-zoom-container group h-64 w-full flex-shrink-0 md:h-full md:w-1/2"
                 >
                     <img
                         src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?q=80&w=1200"
@@ -218,7 +232,9 @@ defineOptions({
                 </div>
             </section>
 
-            <!-- MISSION STATEMENT -->
+            <!-- ============================================ -->
+            <!-- MISSION STATEMENT                            -->
+            <!-- ============================================ -->
             <section
                 class="relative z-40 overflow-hidden bg-brand-dark px-6 py-32 text-center shadow-[0_-30px_60px_rgba(0,0,0,0.5)] lg:py-48"
             >
@@ -226,18 +242,16 @@ defineOptions({
                     <img
                         src="https://images.unsplash.com/photo-1518049362265-d5b2a6467637?q=80&w=2000&auto=format&fit=crop"
                         class="h-full w-full object-cover"
-                        alt="texture"
+                        alt=""
                     />
                 </div>
                 <div class="relative z-10 mx-auto max-w-5xl">
                     <h2
-                        class="mb-12 font-serif text-4xl leading-[1.3] font-light text-brand-blush italic md:text-5xl lg:text-6xl"
+                        class="mb-12 font-serif text-3xl leading-[1.3] font-light text-brand-blush italic sm:text-4xl md:text-5xl lg:text-6xl"
                     >
                         "Our mission is to help couples leave the stress of
                         planning behind and experience the
-                        <span class="font-medium text-brand-rose"
-                            >true joy</span
-                        >
+                        <span class="font-medium text-brand-rose">true joy</span>
                         of a wedding with their nearest and dearest."
                     </h2>
                     <div class="flex flex-col items-center">
@@ -255,11 +269,18 @@ defineOptions({
                 </div>
             </section>
 
-            <!-- AS SEEN IN -->
+            <!-- ============================================ -->
+            <!-- AS FEATURED IN                               -->
+            <!-- ============================================ -->
             <section
                 class="relative z-40 border-b border-brand-rose/20 bg-brand-blush py-16"
             >
                 <div class="mx-auto flex max-w-6xl flex-col items-center px-6">
+                    <p
+                        class="mb-10 text-center text-xs font-semibold tracking-[0.25em] text-brand-mauve uppercase"
+                    >
+                        As Featured In
+                    </p>
                     <div
                         class="flex flex-wrap items-center justify-center gap-12 opacity-60 grayscale transition-all duration-700 hover:grayscale-0 md:gap-24"
                     >

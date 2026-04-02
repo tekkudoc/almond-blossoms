@@ -36,7 +36,6 @@ const form = useForm({
 });
 
 const submit = () => {
-    // For Create, we don't need to spoof _method: 'put'.
     // A standard POST request is perfect.
     form.post('/admin/posts', {
         preserveScroll: true,

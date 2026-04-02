@@ -24,7 +24,7 @@ Route::get('/services', function () {
     return Inertia::render('Services');
 })->name('services');
 
-Route::get('/weddings', function () {
+Route::get('/wedding', function () {
     return Inertia::render('Wedding');
 })->name('weddings');
 

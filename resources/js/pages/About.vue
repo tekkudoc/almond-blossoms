@@ -5,12 +5,13 @@ import PublicLayout from '@/Layouts/PublicLayout.vue';
 defineOptions({
     layout: PublicLayout,
 });
+// FIX: Removed isFirstLoad / sessionStorage logic.
+// Preloader now shows on every page, so animations always run.
 </script>
 
 <template>
     <Head title="Our Story | Almond-Blossoms Events" />
 
-    <!-- 3. REMOVE THE <PublicLayout> WRAPPER TAGS! JUST PASTE THE CONTENT -->
     <div class="pt-24 lg:pt-28">
         <!-- HERO SECTION -->
         <section class="relative overflow-hidden bg-brand-blush pt-20 pb-16">
@@ -21,7 +22,7 @@ defineOptions({
                         >Our Story</span
                     >
                     <h1
-                        class="mb-6 font-serif text-5xl leading-[1.1] text-brand-wine md:text-7xl lg:text-8xl"
+                        class="mb-6 font-serif text-4xl leading-[1.1] text-brand-wine sm:text-5xl md:text-6xl lg:text-8xl"
                     >
                         The Heart Behind <br />
                         <span class="font-light text-brand-mauve italic"
@@ -55,7 +56,7 @@ defineOptions({
                             class="img-zoom-container aspect-[2/3] w-full overflow-hidden rounded-sm shadow-2xl"
                         >
                             <img
-                                src="https://www.almond-blossoms.com/wp-content/uploads/bb-plugin/cache/19-DSC_5032-Edit-portrait-f03f9cac6fa0383784cd3ebf074d1d54-612c9e2460643.jpg"
+                                src="/images/judith.jpg"
                                 alt="Portrait of Judith"
                                 class="img-zoom h-full w-full object-cover"
                             />

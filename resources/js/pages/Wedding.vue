@@ -11,12 +11,13 @@ defineOptions({
     <Head title="Bespoke Weddings | Almond-Blossoms Events" />
 
     <div>
-        <!-- ========================================== -->
-        <!-- HERO SECTION                               -->
-        <!-- ========================================== -->
+        <!-- ============================================ -->
+        <!-- HERO                                         -->
+        <!-- ============================================ -->
         <section
-            class="relative flex h-[85vh] w-full flex-col items-center justify-center overflow-hidden"
+            class="relative flex min-h-[85vh] w-full flex-col items-center justify-center overflow-hidden"
         >
+            <!-- Background image -->
             <div class="absolute inset-0 h-full w-full">
                 <img
                     src="https://images.unsplash.com/photo-1697630240824-d46712423b39?q=80&w=2000&auto=format&fit=crop"
@@ -28,44 +29,47 @@ defineOptions({
                 ></div>
             </div>
 
+            <!-- Hero content — delay synced to preloader exit -->
             <div
-                class="fade-up relative z-10 mx-auto mt-24 max-w-4xl px-4 text-center md:mt-16"
+                class="fade-up relative z-10 mx-auto max-w-4xl px-4 pt-32 text-center md:pt-24"
+                style="animation-delay: 4.2s"
             >
                 <span
                     class="mb-6 block text-[0.65rem] font-semibold tracking-[0.3em] text-brand-light uppercase"
-                    >Almond-Blossoms Events</span
                 >
+                    Almond-Blossoms Events
+                </span>
                 <h1
-                    class="mb-6 font-serif text-5xl leading-[1.1] text-white drop-shadow-2xl md:text-7xl lg:text-8xl"
+                    class="mb-6 font-serif text-4xl leading-[1.1] text-white drop-shadow-2xl sm:text-5xl md:text-7xl lg:text-8xl"
                 >
-                    Wedding Planning <br />
+                    Wedding Planning
+                    <br />
                     <span class="font-light text-brand-rose italic"
                         >Services</span
                     >
                 </h1>
                 <p
-                    class="mx-auto max-w-2xl font-serif text-2xl leading-relaxed text-brand-light/90 italic drop-shadow-md md:text-3xl"
+                    class="mx-auto max-w-2xl font-serif text-xl leading-relaxed text-brand-light/90 italic drop-shadow-md md:text-3xl"
                 >
-                    Relaxed Celebrations & Cherished Memories
+                    Relaxed Celebrations &amp; Cherished Memories
                 </p>
             </div>
 
-            <!-- Scroll Indicator -->
+            <!-- Scroll indicator -->
             <div
-                class="fade-up pointer-events-none absolute bottom-10 left-1/2 z-10 hidden -translate-x-1/2 transform flex-col items-center opacity-80 sm:flex"
+                class="pointer-events-none absolute bottom-10 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center opacity-80 sm:flex"
             >
-                <div class="h-12 w-[1px] bg-brand-rose"></div>
+                <div class="h-12 w-px bg-brand-rose"></div>
             </div>
         </section>
 
-        <!-- ========================================== -->
-        <!-- INTRO PHILOSOPHY                           -->
-        <!-- ========================================== -->
+        <!-- ============================================ -->
+        <!-- INTRO PHILOSOPHY                             -->
+        <!-- ============================================ -->
         <section
             class="border-b border-brand-rose/20 bg-brand-blush py-24 text-center lg:py-32"
         >
             <div class="mx-auto max-w-4xl px-6">
-                <!-- Delicate Icon -->
                 <svg
                     class="mx-auto mb-8 h-8 w-8 text-brand-rose opacity-80"
                     viewBox="0 0 24 24"
@@ -81,14 +85,14 @@ defineOptions({
                     <path d="M12 22v-7"></path>
                 </svg>
                 <h2
-                    class="mb-8 font-serif text-3xl leading-[1.4] font-light text-brand-wine md:text-5xl"
+                    class="mb-8 font-serif text-2xl leading-[1.4] font-light text-brand-wine sm:text-3xl md:text-5xl"
                 >
                     We appreciate the fact that no two weddings are the same,
                     and that not everyone is in need of full wedding design and
                     planning services.
                 </h2>
                 <p
-                    class="mx-auto max-w-2xl text-lg leading-relaxed font-light text-brand-wine/70"
+                    class="mx-auto max-w-2xl text-base leading-relaxed font-light text-brand-wine/70 sm:text-lg"
                 >
                     We therefore delight in encouraging you to choose the exact
                     services and products that best meet your unique needs and
@@ -97,56 +101,56 @@ defineOptions({
             </div>
         </section>
 
-        <!-- ========================================== -->
-        <!-- TIER I: FULL DAY PLANNING & DESIGN         -->
-        <!-- ========================================== -->
+        <!-- ============================================ -->
+        <!-- TIER I — FULL DAY PLANNING & DESIGN          -->
+        <!-- ============================================ -->
         <section class="relative bg-brand-blush py-24 lg:py-40">
             <div class="mx-auto max-w-7xl px-6 lg:px-12">
                 <div
                     class="flex flex-col items-start gap-16 lg:flex-row lg:gap-24"
                 >
-                    <!-- Image Left -->
+                    <!-- Image — stacks above content on mobile, sticky on desktop -->
                     <div class="w-full lg:sticky lg:top-32 lg:w-5/12">
                         <div
                             class="img-zoom-container group aspect-[3/4] w-full overflow-hidden rounded-sm shadow-2xl"
                         >
-                            <!-- Note: Ensure Unsplash links resolve, swapped one for stability -->
                             <img
-                                src="https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=1000&auto=format&fit=crop"
+                                src="https://images.unsplash.com/photo-1768594266694-5e09d0dd308d?q=80&w=1000&auto=format&fit=crop"
                                 alt="Full Day Planning"
                                 class="img-zoom h-full w-full object-cover"
                             />
                         </div>
                     </div>
 
-                    <!-- Content Right -->
+                    <!-- Content -->
                     <div class="w-full lg:w-7/12">
                         <span
-                            class="mb-4 block inline-block border-b border-brand-rose/30 pb-4 text-[0.65rem] font-semibold tracking-[0.25em] text-brand-rose uppercase"
-                            >The Complete Experience</span
+                            class="mb-4 inline-block border-b border-brand-rose/30 pb-4 text-[0.65rem] font-semibold tracking-[0.25em] text-brand-rose uppercase"
                         >
+                            The Complete Experience
+                        </span>
                         <h2
-                            class="mb-8 font-serif text-5xl leading-tight text-brand-wine lg:text-6xl"
+                            class="mb-8 font-serif text-4xl leading-tight text-brand-wine sm:text-5xl lg:text-6xl"
                         >
-                            Full Day Planning <br /><span
-                                class="font-light text-brand-mauve italic"
-                                >& Design</span
+                            Full Day Planning
+                            <br />
+                            <span class="font-light text-brand-mauve italic"
+                                >&amp; Design</span
                             >
                         </h2>
 
                         <p
-                            class="mb-12 text-lg leading-relaxed font-light text-brand-wine/80"
+                            class="mb-12 text-base leading-relaxed font-light text-brand-wine/80 sm:text-lg"
                         >
                             This is a tailor-made service to your exact
                             requirements. We work intimately with our clients,
                             guiding them gracefully through each stage of the
-                            planning process—from the initial design concept
+                            planning process — from the initial design concept
                             right up to the day itself.
                         </p>
 
-                        <!-- Haute Couture Menu List -->
                         <h4
-                            class="mb-6 font-serif text-2xl text-brand-wine italic"
+                            class="mb-6 font-serif text-xl text-brand-wine italic sm:text-2xl"
                         >
                             What to expect with this service:
                         </h4>
@@ -211,14 +215,15 @@ defineOptions({
                             </li>
                         </ul>
 
-                        <!-- Investment Block -->
+                        <!-- Investment -->
                         <div
-                            class="border-l-4 border-brand-rose bg-brand-light p-10 lg:p-12"
+                            class="border-l-4 border-brand-rose bg-brand-light p-8 lg:p-12"
                         >
                             <span
                                 class="mb-4 block text-xs font-semibold tracking-widest text-brand-rose uppercase"
-                                >Investment</span
                             >
+                                Investment
+                            </span>
                             <p
                                 class="mb-6 text-sm leading-relaxed font-light text-brand-wine/80"
                             >
@@ -226,25 +231,28 @@ defineOptions({
                                 consultation and listed fully within our bespoke
                                 proposal.
                             </p>
-                            <div class="mb-8 flex items-end gap-4">
+                            <div class="mb-8 flex flex-wrap items-end gap-4">
                                 <span
-                                    class="font-serif text-6xl leading-none text-brand-wine italic lg:text-7xl"
-                                    >£4,000</span
+                                    class="font-serif text-5xl leading-none text-brand-wine italic lg:text-7xl"
                                 >
+                                    £4,000
+                                </span>
                                 <div class="flex flex-col pb-2">
                                     <span
                                         class="text-[0.65rem] font-semibold tracking-widest text-brand-rose uppercase"
-                                        >Minimum Fee</span
                                     >
+                                        Minimum Fee
+                                    </span>
                                     <span
                                         class="text-xs font-light text-brand-wine/70"
-                                        >Or 10% - 15% of your budget</span
                                     >
+                                        Or 10% – 15% of your budget
+                                    </span>
                                 </div>
                             </div>
                             <Link
                                 href="/contact"
-                                class="inline-block rounded-sm bg-brand-wine px-10 py-4 text-xs font-semibold tracking-widest text-brand-blush uppercase shadow-xl transition-all hover:bg-brand-rose hover:text-white"
+                                class="inline-block rounded-sm bg-brand-wine px-8 py-4 text-xs font-semibold tracking-widest text-brand-blush uppercase shadow-xl transition-all hover:bg-brand-rose hover:text-white"
                             >
                                 Schedule a Consultation Call
                             </Link>
@@ -254,31 +262,33 @@ defineOptions({
             </div>
         </section>
 
-        <!-- ========================================== -->
-        <!-- TIER II: FINAL THREE MONTHS                -->
-        <!-- ========================================== -->
+        <!-- ============================================ -->
+        <!-- TIER II — FINAL THREE MONTHS                 -->
+        <!-- ============================================ -->
         <section class="relative bg-brand-light py-24 lg:py-40">
             <div class="mx-auto max-w-7xl px-6 lg:px-12">
                 <div
-                    class="flex flex-col-reverse items-start gap-16 lg:flex-row lg:gap-24"
+                    class="flex flex-col items-start gap-16 lg:flex-row lg:gap-24"
                 >
-                    <!-- Content Left -->
+                    <!-- Content — always first in DOM, so renders first on mobile -->
                     <div class="w-full lg:w-7/12">
                         <span
-                            class="mb-4 block w-max border-b border-brand-rose/30 pb-4 text-[0.65rem] font-semibold tracking-[0.25em] text-brand-rose uppercase"
-                            >The Seamless Handoff</span
+                            class="mb-4 inline-block border-b border-brand-rose/30 pb-4 text-[0.65rem] font-semibold tracking-[0.25em] text-brand-rose uppercase"
                         >
+                            The Seamless Handoff
+                        </span>
                         <h2
-                            class="mb-8 font-serif text-5xl leading-tight text-brand-wine lg:text-6xl"
+                            class="mb-8 font-serif text-4xl leading-tight text-brand-wine sm:text-5xl lg:text-6xl"
                         >
-                            Final Three Months <br /><span
-                                class="font-light text-brand-mauve italic"
+                            Final Three Months
+                            <br />
+                            <span class="font-light text-brand-mauve italic"
                                 >Co-ordination</span
                             >
                         </h2>
 
                         <p
-                            class="mb-12 text-lg leading-relaxed font-light text-brand-wine/80"
+                            class="mb-12 text-base leading-relaxed font-light text-brand-wine/80 sm:text-lg"
                         >
                             We completely understand the stress that comes from
                             planning and trying to finalize details without
@@ -288,7 +298,7 @@ defineOptions({
                         </p>
 
                         <h4
-                            class="mb-6 font-serif text-2xl text-brand-wine italic"
+                            class="mb-6 font-serif text-xl text-brand-wine italic sm:text-2xl"
                         >
                             What to expect with this service:
                         </h4>
@@ -339,46 +349,48 @@ defineOptions({
                             </li>
                         </ul>
 
-                        <!-- Investment Block -->
+                        <!-- Investment -->
                         <div
-                            class="border-l-4 border-brand-rose bg-brand-blush p-10 shadow-md lg:p-12"
+                            class="border-l-4 border-brand-rose bg-brand-blush p-8 shadow-md lg:p-12"
                         >
                             <span
                                 class="mb-4 block text-xs font-semibold tracking-widest text-brand-rose uppercase"
-                                >Investment</span
                             >
-                            <div class="mb-6 flex items-end gap-4">
+                                Investment
+                            </span>
+                            <div class="mb-6 flex flex-wrap items-end gap-4">
                                 <span
-                                    class="mb-3 text-sm font-light tracking-widest text-brand-wine/70 uppercase"
-                                    >From</span
+                                    class="text-sm font-light tracking-widest text-brand-wine/70 uppercase"
                                 >
+                                    From
+                                </span>
                                 <span
-                                    class="font-serif text-6xl leading-none text-brand-wine italic lg:text-7xl"
-                                    >£2,000</span
+                                    class="font-serif text-5xl leading-none text-brand-wine italic lg:text-7xl"
                                 >
+                                    £2,000
+                                </span>
                             </div>
                             <p
                                 class="mb-8 text-xs font-light tracking-widest text-brand-wine/70 uppercase"
                             >
                                 Depending on size, complexity, and location
                             </p>
-
                             <Link
                                 href="/contact"
-                                class="inline-block rounded-sm border border-brand-wine bg-transparent px-10 py-4 text-xs font-semibold tracking-widest text-brand-wine uppercase transition-all hover:bg-brand-wine hover:text-white"
+                                class="inline-block rounded-sm border border-brand-wine bg-transparent px-8 py-4 text-xs font-semibold tracking-widest text-brand-wine uppercase transition-all hover:bg-brand-wine hover:text-white"
                             >
-                                Find out more
+                                Find Out More
                             </Link>
                         </div>
                     </div>
 
-                    <!-- Image Right -->
+                    <!-- Image — after content in DOM, so stacks below on mobile -->
                     <div class="w-full lg:sticky lg:top-32 lg:w-5/12">
                         <div
                             class="img-zoom-container group aspect-[3/4] w-full overflow-hidden rounded-sm shadow-2xl"
                         >
                             <img
-                                src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1000&auto=format&fit=crop"
+                                src="https://images.unsplash.com/photo-1708601420996-44e883ea1be2?q=80&w=1000&auto=format&fit=crop"
                                 alt="Three Months Coordination"
                                 class="img-zoom h-full w-full object-cover"
                             />
@@ -388,44 +400,46 @@ defineOptions({
             </div>
         </section>
 
-        <!-- ========================================== -->
-        <!-- TIER III: ON THE DAY MANAGEMENT            -->
-        <!-- ========================================== -->
+        <!-- ============================================ -->
+        <!-- TIER III — ON THE DAY MANAGEMENT             -->
+        <!-- ============================================ -->
         <section class="relative bg-brand-blush py-24 lg:py-40">
             <div class="mx-auto max-w-7xl px-6 lg:px-12">
                 <div
                     class="flex flex-col items-start gap-16 lg:flex-row lg:gap-24"
                 >
-                    <!-- Image Left -->
+                    <!-- Image — stacks above content on mobile, sticky on desktop -->
                     <div class="w-full lg:sticky lg:top-32 lg:w-5/12">
                         <div
                             class="img-zoom-container group aspect-[3/4] w-full overflow-hidden rounded-sm shadow-2xl"
                         >
                             <img
-                                src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=1000&auto=format&fit=crop"
+                                src="https://images.unsplash.com/photo-1639291499476-c784e4fff4b1?q=80&w=1000&auto=format&fit=crop"
                                 alt="On The Day Management"
                                 class="img-zoom h-full w-full object-cover"
                             />
                         </div>
                     </div>
 
-                    <!-- Content Right -->
+                    <!-- Content -->
                     <div class="w-full lg:w-7/12">
                         <span
-                            class="mb-4 block inline-block border-b border-brand-rose/30 pb-4 text-[0.65rem] font-semibold tracking-[0.25em] text-brand-rose uppercase"
-                            >The Perfect Execution</span
+                            class="mb-4 inline-block border-b border-brand-rose/30 pb-4 text-[0.65rem] font-semibold tracking-[0.25em] text-brand-rose uppercase"
                         >
+                            The Perfect Execution
+                        </span>
                         <h2
-                            class="mb-8 font-serif text-5xl leading-tight text-brand-wine lg:text-6xl"
+                            class="mb-8 font-serif text-4xl leading-tight text-brand-wine sm:text-5xl lg:text-6xl"
                         >
-                            On The Day <br /><span
-                                class="font-light text-brand-mauve italic"
+                            On The Day
+                            <br />
+                            <span class="font-light text-brand-mauve italic"
                                 >Management</span
                             >
                         </h2>
 
                         <p
-                            class="mb-12 text-lg leading-relaxed font-light text-brand-wine/80"
+                            class="mb-12 text-base leading-relaxed font-light text-brand-wine/80 sm:text-lg"
                         >
                             For couples marrying in a short time frame, or those
                             balancing busy schedules and commitments. We offer
@@ -435,7 +449,7 @@ defineOptions({
                         </p>
 
                         <h4
-                            class="mb-6 font-serif text-2xl text-brand-wine italic"
+                            class="mb-6 font-serif text-xl text-brand-wine italic sm:text-2xl"
                         >
                             What to expect with this service:
                         </h4>
@@ -468,23 +482,26 @@ defineOptions({
                             </li>
                         </ul>
 
-                        <!-- Investment Block -->
+                        <!-- Investment -->
                         <div
-                            class="border-l-4 border-brand-rose bg-brand-light p-10 shadow-md lg:p-12"
+                            class="border-l-4 border-brand-rose bg-brand-light p-8 shadow-md lg:p-12"
                         >
                             <span
                                 class="mb-4 block text-xs font-semibold tracking-widest text-brand-rose uppercase"
-                                >Investment</span
                             >
-                            <div class="mb-6 flex items-end gap-4">
+                                Investment
+                            </span>
+                            <div class="mb-6 flex flex-wrap items-end gap-4">
                                 <span
-                                    class="mb-3 text-sm font-light tracking-widest text-brand-wine/70 uppercase"
-                                    >From</span
+                                    class="text-sm font-light tracking-widest text-brand-wine/70 uppercase"
                                 >
+                                    From
+                                </span>
                                 <span
-                                    class="font-serif text-6xl leading-none text-brand-wine italic lg:text-7xl"
-                                    >£1,000</span
+                                    class="font-serif text-5xl leading-none text-brand-wine italic lg:text-7xl"
                                 >
+                                    £1,000
+                                </span>
                             </div>
                             <p
                                 class="mb-8 max-w-sm text-xs leading-relaxed font-light tracking-widest text-brand-wine/70 uppercase"
@@ -492,10 +509,9 @@ defineOptions({
                                 This service is dependent on the level of
                                 support and the logistics of the wedding.
                             </p>
-
                             <Link
                                 href="/contact"
-                                class="inline-block rounded-sm bg-brand-wine px-10 py-4 text-xs font-semibold tracking-widest text-brand-blush uppercase shadow-xl transition-all hover:bg-brand-rose hover:text-white"
+                                class="inline-block rounded-sm bg-brand-wine px-8 py-4 text-xs font-semibold tracking-widest text-brand-blush uppercase shadow-xl transition-all hover:bg-brand-rose hover:text-white"
                             >
                                 Check Availability
                             </Link>

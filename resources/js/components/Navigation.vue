@@ -3,6 +3,9 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { Link } from '@inertiajs/vue3';
 
 const isMobileMenuOpen = ref(false);
+
+// FIX: Always animate the header slide-down since preloader always shows now.
+// Removed the sessionStorage gate — header-slide-down runs on every page.
 const showSlideDownAnimation = ref(false);
 
 const closeMenu = () => {
@@ -23,26 +26,19 @@ const handleEscape = (e) => {
 
 onMounted(() => {
     document.addEventListener('keydown', handleEscape);
-
-    // Check if this is the very first time the user visited the site.
-    // If it is, we play the slide-down animation. If not, the header appears instantly.
-    if (!sessionStorage.getItem('header_animated')) {
-        showSlideDownAnimation.value = true;
-        sessionStorage.setItem('header_animated', 'true');
-    }
+    // Always play the slide-down animation since preloader always runs
+    showSlideDownAnimation.value = true;
 });
 
 onUnmounted(() => document.removeEventListener('keydown', handleEscape));
 </script>
 
 <template>
-    <!-- SSR FIX: Single root element -->
     <div class="navigation-root-container">
-        <!-- Desktop Header -->
         <header
             :class="[
                 'fixed top-0 z-40 w-full border-b border-brand-rose/20 bg-brand-blush/85 backdrop-blur-md',
-                showSlideDownAnimation ? 'header-slide-down' : '',
+                showSlideDownAnimation ? 'header-slide-down' : 'header-visible',
             ]"
         >
             <div
@@ -80,7 +76,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleEscape));
                         >Our Story</Link
                     >
 
-                    <!-- Services Dropdown (CSS Hover driven) -->
+                    <!-- Services Dropdown -->
                     <div class="group relative flex h-full items-center">
                         <Link
                             href="/services"
@@ -101,8 +97,6 @@ onUnmounted(() => document.removeEventListener('keydown', handleEscape));
                                 ></path>
                             </svg>
                         </Link>
-
-                        <!-- Dropdown Menu -->
                         <div
                             class="invisible absolute top-full left-1/2 w-56 -translate-x-1/2 translate-y-2 transform pt-4 opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
                         >
@@ -127,16 +121,6 @@ onUnmounted(() => document.removeEventListener('keydown', handleEscape));
                                     <span
                                         class="font-serif text-lg text-brand-rose/50 italic"
                                         >II.</span
-                                    >
-                                </Link>
-                                <Link
-                                    href="/services"
-                                    class="flex items-center justify-between px-6 py-4 text-xs font-semibold tracking-[0.15em] text-brand-wine uppercase transition-colors hover:bg-brand-light hover:text-brand-rose"
-                                >
-                                    Event Creche
-                                    <span
-                                        class="font-serif text-lg text-brand-rose/50 italic"
-                                        >III.</span
                                     >
                                 </Link>
                             </div>
@@ -179,7 +163,6 @@ onUnmounted(() => document.removeEventListener('keydown', handleEscape));
 
         <!-- Mobile Navigation Drawer -->
         <div class="md:hidden">
-            <!-- Dark Overlay -->
             <transition
                 enter-active-class="transition-opacity duration-300"
                 enter-from-class="opacity-0"
@@ -196,12 +179,10 @@ onUnmounted(() => document.removeEventListener('keydown', handleEscape));
                 ></div>
             </transition>
 
-            <!-- Sliding Drawer -->
             <div
                 :class="isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'"
                 class="fixed top-0 right-0 z-[50] flex h-full w-full transform flex-col overflow-y-auto bg-brand-blush shadow-2xl transition-transform duration-500 ease-in-out sm:w-80"
             >
-                <!-- Drawer Header -->
                 <div
                     class="flex items-center justify-between border-b border-brand-rose/20 px-8 py-6"
                 >
@@ -243,7 +224,6 @@ onUnmounted(() => document.removeEventListener('keydown', handleEscape));
                     </button>
                 </div>
 
-                <!-- Nav Links -->
                 <nav class="flex flex-1 flex-col gap-0 px-8 py-8">
                     <Link
                         href="/"
@@ -257,17 +237,13 @@ onUnmounted(() => document.removeEventListener('keydown', handleEscape));
                         class="block border-b border-brand-rose/10 py-3 text-sm font-semibold tracking-[0.2em] text-brand-wine uppercase transition-colors hover:text-brand-rose"
                         >Our Story</Link
                     >
-
-                    <!-- Mobile Services Section -->
                     <div class="border-b border-brand-rose/10 py-3">
                         <Link
                             href="/services"
                             @click="closeMenu"
                             class="flex items-center justify-between text-sm font-semibold tracking-[0.2em] text-brand-wine uppercase transition-colors hover:text-brand-rose"
+                            >Services</Link
                         >
-                            Services
-                        </Link>
-                        <!-- Nested Mobile Links -->
                         <div
                             class="mt-4 flex flex-col space-y-4 border-l border-brand-rose/30 pl-4"
                         >
@@ -293,14 +269,12 @@ onUnmounted(() => document.removeEventListener('keydown', handleEscape));
                             </Link>
                         </div>
                     </div>
-
                     <Link
                         href="/journal"
                         @click="closeMenu"
                         class="block border-b border-brand-rose/10 py-3 text-sm font-semibold tracking-[0.2em] text-brand-wine uppercase transition-colors hover:text-brand-rose"
                         >Journal</Link
                     >
-
                     <Link
                         href="/contact"
                         @click="closeMenu"
