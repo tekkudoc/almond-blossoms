@@ -57,18 +57,23 @@ onUnmounted(() => {
                 <div
                     class="flex flex-col items-center text-center text-brand-wine"
                 >
+                    <!-- Swirly Monogram remains cursive (Lavishly Yours) -->
                     <span
                         class="mb-4 font-serif text-7xl leading-none font-light tracking-tighter italic md:text-9xl"
                         >AB</span
                     >
+
+                    <!-- Brand Name: Changed to font-sans (Georgia) for luxury magazine feel -->
                     <span
-                        class="font-serif text-sm tracking-[0.3em] uppercase md:text-base"
-                        >Almond-Blossoms</span
+                        class="font-sans text-[0.7rem] font-bold tracking-[0.4em] uppercase md:text-xs"
                     >
+                        Almond-Blossoms
+                    </span>
                     <span
-                        class="mt-1 font-serif text-xs tracking-[0.2em] text-brand-mauve uppercase md:text-sm"
-                        >Events</span
+                        class="mt-1 font-sans text-[0.6rem] font-bold tracking-[0.3em] text-brand-mauve uppercase md:text-[0.7rem]"
                     >
+                        Events
+                    </span>
                 </div>
             </div>
 

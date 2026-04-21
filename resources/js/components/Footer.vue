@@ -69,7 +69,7 @@ const handleCookies = (accepted) => {
             <div
                 class="mb-24 grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-12"
             >
-                <!-- CTA Left (With Socials added below) -->
+                <!-- CTA Left -->
                 <div class="pr-0 lg:col-span-6 lg:pr-12">
                     <h2
                         class="mb-8 font-serif text-6xl leading-none font-light text-brand-blush italic md:text-8xl"
@@ -84,9 +84,8 @@ const handleCookies = (accepted) => {
                         100% authentic.
                     </p>
 
-                    <div
-                        class="flex flex-col gap-8 sm:flex-row sm:items-center"
-                    >
+                    <!-- UPDATED: Stacked vertically using flex-col and gap-8 -->
+                    <div class="flex flex-col gap-10">
                         <Link
                             href="/contact"
                             class="inline-block w-max rounded-sm bg-brand-rose px-10 py-5 text-sm font-semibold tracking-[0.15em] text-brand-dark uppercase shadow-lg transition-all duration-400 hover:bg-brand-blush hover:text-brand-wine"
@@ -94,10 +93,8 @@ const handleCookies = (accepted) => {
                             Get In Touch
                         </Link>
 
-                        <!-- Clean Social Media Icons -->
-                        <div
-                            class="flex items-center gap-6 text-brand-light/80 sm:ml-4"
-                        >
+                        <!-- Clean Social Media Icons (Moved directly below the button) -->
+                        <div class="flex items-center gap-6 text-brand-light/80">
                             <a
                                 :href="instagramUrl"
                                 target="_blank"
@@ -140,7 +137,7 @@ const handleCookies = (accepted) => {
                     </div>
                 </div>
 
-                <!-- Links Right -->
+                <!-- Links Right (Strictly 2 Columns) -->
                 <div
                     class="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:col-span-6 lg:pt-6"
                 >
@@ -158,28 +155,28 @@ const handleCookies = (accepted) => {
                                 <Link
                                     href="/"
                                     class="block transition-all duration-300 hover:pl-2 hover:text-brand-rose"
-                                    >Home</Link
+                                >Home</Link
                                 >
                             </li>
                             <li>
                                 <Link
                                     href="/about"
                                     class="block transition-all duration-300 hover:pl-2 hover:text-brand-rose"
-                                    >Our Story</Link
+                                >Our Story</Link
                                 >
                             </li>
                             <li>
                                 <Link
                                     href="/services"
                                     class="block transition-all duration-300 hover:pl-2 hover:text-brand-rose"
-                                    >Services</Link
+                                >Services</Link
                                 >
                             </li>
                             <li>
                                 <Link
                                     href="/journal"
                                     class="block transition-all duration-300 hover:pl-2 hover:text-brand-rose"
-                                    >Journal</Link
+                                >Journal</Link
                                 >
                             </li>
                         </ul>
@@ -249,14 +246,14 @@ const handleCookies = (accepted) => {
 
                 <div class="flex space-x-8">
                     <Link
-                        href="#"
+                        href="/privacy-policy"
                         class="transition-colors hover:text-brand-rose"
-                        >Privacy Policy</Link
+                    >Privacy Policy</Link
                     >
                     <Link
-                        href="#"
+                        href="/terms-and-conditions"
                         class="transition-colors hover:text-brand-rose"
-                        >Cookies</Link
+                    >Terms & Conditions</Link
                     >
                 </div>
             </div>

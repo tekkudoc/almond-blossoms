@@ -13,11 +13,16 @@ return new class extends Migration
     {
         Schema::create('inquiries', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
+            $table->string('first_name');
+            $table->string('last_name');
             $table->string('email');
-            $table->string('phone')->nullable();
-            $table->string('event_date')->nullable();
+            $table->string('phone');
             $table->string('event_type');
+            $table->string('event_location');
+            $table->date('event_date')->nullable();
+            $table->string('guest_numbers')->nullable();
+            $table->string('approximate_budget');
+            $table->string('found_us_via');
             $table->text('message');
             $table->string('status')->default('unread');
             $table->timestamps();

@@ -1,16 +1,107 @@
-<script setup>
-import { Head, Link } from '@inertiajs/vue3';
-import PublicLayout from '@/Layouts/PublicLayout.vue';
+<script>
+import PublicLayout from '@/layouts/PublicLayout.vue';
 
-defineOptions({
+export default {
     layout: PublicLayout,
-});
-// FIX: Removed isFirstLoad / sessionStorage logic.
-// Preloader now shows on every page, so animations always run.
+};
+</script>
+
+<script setup>
+import { ref } from 'vue';
+import { Head, Link } from '@inertiajs/vue3';
+import { Plus, Minus } from 'lucide-vue-next';
+
+// FAQ Accordion State
+const activeFaq = ref(null);
+
+const toggleFaq = (index) => {
+    activeFaq.value = activeFaq.value === index ? null : index;
+};
+
+const faqs = [
+    {
+        question: 'What services do you offer?',
+        answer: 'We provide complete event services including full wedding planning, partial planning, on the day coordination, event coordination, and professional crèche (childcare) services for events. We tailor our services to suit your needs.',
+    },
+    {
+        question: 'What does your wedding planning service include?',
+        answer: 'Our services include venue sourcing, supplier coordination, décor styling, timeline management, and on-the-day coordination.',
+    },
+    {
+        question: 'Where are you based?',
+        answer: 'We are based in Essex, serving couples throughout the UK. Whether you’re planning a local wedding or a destination celebration in the UK, I can help make your day unforgettable.',
+    },
+    {
+        question: 'Are you insured?',
+        answer: 'Yes, Almond-Blossoms is fully insured with public liability insurance for events and childcare services, so you can have complete peace of mind.',
+    },
+    {
+        question: 'Will you be there on the day?',
+        answer: 'Absolutely! All wedding planning and creche services include Judith being on-site for your special day. I will manage timelines, suppliers, creche setup and everything in between, ensuring you can relax and enjoy your celebration.',
+    },
+    {
+        question: 'Can you work with my chosen vendors?',
+        answer: 'Yes! We can collaborate with your preferred vendors or recommend trusted professionals.',
+    },
+    {
+        question: 'How far in advance should we book your services?',
+        answer: 'Ideally, couples book us 12–18 months before their wedding, but we also offer last-minute planning support. For creche services, we recommend booking at least 3–6 months in advance for weddings and 4–8 weeks for smaller events.',
+    },
+    {
+        question:
+            'Can we hire you for just wedding and event services or creche service?',
+        answer: 'Yes, you can hire our wedding and event services or our crèche services separately, depending on your needs. We also offer the option to combine both as part of a tailored package for your event. Whichever service you choose, we are committed to ensuring everything runs smoothly so you can relax and fully enjoy your special day.',
+    },
+    {
+        question: 'Do you handle wedding budgets?',
+        answer: 'Yes, we help track spending, recommend cost-saving strategies, and ensure your budget is used effectively.',
+    },
+    {
+        question: 'How much does wedding planning cost?',
+        answer: 'Our pricing depends on the level of service required. We provide custom quotes based on your needs.',
+    },
+    {
+        question: 'Any additional fees we should be aware of?',
+        answer: 'All fees are clearly outlined in your personalised proposal after your consultation. Additional costs may include travel and accommodation, creche setup depending on your location and the number of days we’re on-site.',
+    },
+    {
+        question:
+            'Will we still have control over wedding if we hire a planner?',
+        answer: 'Absolutely. You make all key decisions, and I act as your dedicated wedding PA, handling the logistics and supplier coordination so you can focus on enjoying your engagement and wedding day.',
+    },
+    {
+        question: 'How many weddings do you plan at one time?',
+        answer: 'Each couple deserves personalised attention. To maintain my high standard, I only take on a limited number of full-planning weddings each year. Contact us early to check availability and secure your date.',
+    },
+    {
+        question: 'What Legal checks do your staff have?',
+        answer: 'Our staff have all legal checks such as: Enhanced DBS, first aid trained and fully qualified in childcare.',
+    },
+    {
+        question: 'What age range of children do you look after?',
+        answer: 'Almond-Blossoms Events creche caters for ages that range from 0-12 years old for all service types. We follow recommended childcare ratios to ensure safety and proper supervision.',
+    },
+    {
+        question: 'Can parents check on their children during the event?',
+        answer: 'Of course! Parents are welcome to visit the crèche area at any time.',
+    },
+    {
+        question: 'Do you provide childcare at the venue?',
+        answer: 'Yes, we set up a dedicated crèche area at your event venue.',
+    },
+    {
+        question: 'What safety measures do you have in place?',
+        answer: 'We prioritise safety with secure sign-in/out procedures, first-aid trained staff, and risk assessments.',
+    },
+    {
+        question: 'How do we secure our date with you?',
+        answer: 'A signed contract and deposit are required to officially book our services.',
+    },
+];
 </script>
 
 <template>
-    <Head title="Our Story | Almond-Blossoms Events" />
+    <Head title="Our Story & FAQ | Almond-Blossoms Events" />
 
     <div class="pt-24 lg:pt-28">
         <!-- HERO SECTION -->
@@ -22,11 +113,11 @@ defineOptions({
                         >Our Story</span
                     >
                     <h1
-                        class="mb-6 font-serif text-4xl leading-[1.1] text-brand-wine sm:text-5xl md:text-6xl lg:text-8xl"
+                        class="mb-6 font-serif text-5xl leading-[1.1] text-brand-wine md:text-7xl lg:text-8xl"
                     >
-                        The Heart Behind <br />
+                        Meet
                         <span class="font-light text-brand-mauve italic"
-                            >the Art.</span
+                            >Judith.</span
                         >
                     </h1>
                 </div>
@@ -56,7 +147,7 @@ defineOptions({
                             class="img-zoom-container aspect-[2/3] w-full overflow-hidden rounded-sm shadow-2xl"
                         >
                             <img
-                                src="/images/judith.jpg"
+                                src="https://www.almond-blossoms.com/wp-content/uploads/bb-plugin/cache/19-DSC_5032-Edit-portrait-f03f9cac6fa0383784cd3ebf074d1d54-612c9e2460643.jpg"
                                 alt="Portrait of Judith"
                                 class="img-zoom h-full w-full object-cover"
                             />
@@ -67,7 +158,7 @@ defineOptions({
                             <span class="h-[1px] w-12 bg-brand-rose"></span>
                             <span
                                 class="text-xs font-semibold tracking-[0.2em] text-brand-mauve uppercase"
-                                >Meet Judith</span
+                                >About The Founder</span
                             >
                         </div>
                         <h2
@@ -79,29 +170,27 @@ defineOptions({
                             >
                         </h2>
                         <div
-                            class="space-y-6 text-lg leading-relaxed font-light text-brand-wine/80"
+                            class="space-y-6 text-justify font-sans text-lg leading-relaxed font-light text-brand-wine/80 md:text-left"
                         >
                             <p class="drop-cap">
                                 Hello, allow me to introduce myself. I am a
                                 planner passionate about all things weddings and
-                                events. I absolutely love the beauty that comes
-                                as a result of flawless organization and
-                                boundless creativity.
+                                events. I love beauty that comes because of good
+                                organisation and creativity.
                             </p>
                             <p>
                                 At Almond-Blossoms, we provide professional and
                                 friendly services while planning your event with
-                                absolute uniqueness. We approach every occasion
-                                with sheer sophistication to create highly
-                                intimate and unforgettable experiences.
+                                uniqueness and approaching it with sheer
+                                sophistication while creating intimate
+                                occasions.
                             </p>
                             <p>
-                                I am fiercely passionate about what we do, and
-                                aim to offer an unparalleled level of service to
-                                our clients. We exist to assist in turning your
-                                dream event into a reality, ensuring a
-                                stress-free day filled entirely with memories to
-                                cherish.
+                                I am passionate about what we do and aim to
+                                offer quality services to our clients which
+                                assist in turning your dream event into a
+                                reality making it a stress-free day filled with
+                                memories to cherish.
                             </p>
                         </div>
                         <div class="mt-12 flex items-center gap-6">
@@ -133,35 +222,32 @@ defineOptions({
                 >
                     <div class="order-2 lg:order-1">
                         <span
-                            class="mb-4 block inline-block border-b border-brand-rose/30 pb-4 text-xs font-semibold tracking-[0.25em] text-brand-rose uppercase"
-                            >My Passion</span
+                            class="mb-4 block w-max border-b border-brand-rose/30 pb-4 text-xs font-semibold tracking-[0.25em] text-brand-rose uppercase"
+                            >Personal Insights</span
                         >
                         <h2
                             class="mb-8 font-serif text-5xl leading-tight text-brand-wine"
                         >
-                            Nature, Art, <br />
+                            My
                             <span class="font-light text-brand-mauve italic"
-                                >& Integrity.</span
+                                >Passion.</span
                             >
                         </h2>
                         <div
-                            class="space-y-6 text-lg leading-relaxed font-light text-brand-wine/80"
+                            class="space-y-6 text-justify font-sans text-lg leading-relaxed font-light text-brand-wine/80 md:text-left"
                         >
                             <p>
-                                I love nature, so outdoor adventures constantly
-                                allow me to envision intimate weddings and
-                                events in quiet, idyllic places. I find my
-                                inspiration in cycling, hiking, travelling,
-                                exploring art galleries, and experiencing the
-                                theater.
+                                I love nature so outdoor adventures allow me to
+                                envision intimate weddings and events in quiet
+                                idyllic places. I like cycling, hiking,
+                                travelling, art galleries and theatres.
                             </p>
                             <p>
-                                I firmly believe in respect and being mindful of
-                                others, therefore maintaining a non-judgmental
-                                atmosphere as we work closely together.
-                                Integrity and nurturing excellent, trustworthy
-                                working relationships is a massive part of who I
-                                am and exactly what I do.
+                                I believe in respect and being mindful of others
+                                therefore being non-judgmental as we work
+                                together. Integrity and nurturing good work
+                                relationships is a big part of who I am and what
+                                I do.
                             </p>
                         </div>
                     </div>
@@ -239,21 +325,21 @@ defineOptions({
                             >
                         </h2>
                         <div
-                            class="mb-10 space-y-6 text-lg leading-relaxed font-light text-brand-light/80"
+                            class="mb-10 space-y-6 font-sans text-lg leading-relaxed font-light text-brand-light/80"
                         >
                             <p>
                                 I know planning a wedding can be a daunting
-                                experience. So why not enjoy an exclusive 1:1
-                                session with me to look at exactly how we can
-                                assist you in planning your lovely event?
+                                experience. So why not enjoy a 1:1 session with
+                                me as we look on how we can assist you in
+                                planning your lovely event.
                             </p>
                             <p>
                                 This consultation service is designed to guide
-                                you through the steps of planning your event
-                                from start to finish—looking at your budget,
-                                creating a manageable timeline, sourcing
-                                vendors, and making your journey as smooth and
-                                stress-free as possible.
+                                you work through the steps of planning your
+                                event from start to finish looking at budget or
+                                creating a manageable timeline to sourcing
+                                vendors and making your journey as smooth and
+                                stress free.
                             </p>
                         </div>
                         <div class="mb-10">
@@ -263,83 +349,44 @@ defineOptions({
                                 What you can expect from this session:
                             </h4>
                             <ul
-                                class="space-y-4 font-light text-brand-light/80"
+                                class="space-y-4 font-sans font-light text-brand-light/80"
                             >
                                 <li class="flex items-start gap-4">
-                                    <svg
-                                        class="mt-1 h-5 w-5 shrink-0 text-brand-rose"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M5 13l4 4L19 7"
-                                        ></path>
-                                    </svg>
                                     <span
-                                        >Creative ideas, mood-boarding, and
-                                        tailored recommendations.</span
+                                        class="mt-0.5 shrink-0 text-brand-rose"
+                                        >•</span
+                                    >
+                                    <span>Ideas and recommendations</span>
+                                </li>
+                                <li class="flex items-start gap-4">
+                                    <span
+                                        class="mt-0.5 shrink-0 text-brand-rose"
+                                        >•</span
+                                    >
+                                    <span
+                                        >Questions you might want to ask your
+                                        suppliers and vendors</span
                                     >
                                 </li>
                                 <li class="flex items-start gap-4">
-                                    <svg
-                                        class="mt-1 h-5 w-5 shrink-0 text-brand-rose"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M5 13l4 4L19 7"
-                                        ></path>
-                                    </svg>
                                     <span
-                                        >Crucial questions you might want to ask
-                                        your suppliers and vendors.</span
+                                        class="mt-0.5 shrink-0 text-brand-rose"
+                                        >•</span
+                                    >
+                                    <span
+                                        >Any concerns and views you may
+                                        have</span
                                     >
                                 </li>
                                 <li class="flex items-start gap-4">
-                                    <svg
-                                        class="mt-1 h-5 w-5 shrink-0 text-brand-rose"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M5 13l4 4L19 7"
-                                        ></path>
-                                    </svg>
                                     <span
-                                        >Professional guidance on any concerns
-                                        and views you may have.</span
+                                        class="mt-0.5 shrink-0 text-brand-rose"
+                                        >•</span
                                     >
-                                </li>
-                                <li class="flex items-start gap-4">
-                                    <svg
-                                        class="mt-1 h-5 w-5 shrink-0 text-brand-rose"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M5 13l4 4L19 7"
-                                        ></path>
-                                    </svg>
                                     <span
-                                        >Sessions are booked on hourly
-                                        time-slots to fit your busy
-                                        schedule.</span
+                                        >Our sessions are booked on hourly
+                                        timeslots. I would love to hear more
+                                        about your wedding or event plans.</span
                                     >
                                 </li>
                             </ul>
@@ -351,13 +398,9 @@ defineOptions({
                                 Investment
                             </h5>
                             <p
-                                class="mb-8 font-serif text-4xl text-brand-blush italic"
+                                class="mb-8 font-serif text-3xl text-brand-blush italic"
                             >
-                                £100
-                                <span
-                                    class="font-sans text-2xl font-light text-brand-light/60 not-italic"
-                                    >/ hour</span
-                                >
+                                priced at £100 per session
                             </p>
                             <Link
                                 href="/contact"
@@ -365,6 +408,83 @@ defineOptions({
                             >
                                 Book Your Call
                             </Link>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- THE FAQ ACCORDION                          -->
+        <!-- ========================================== -->
+        <section
+            class="relative border-t border-brand-rose/10 bg-brand-blush py-24 lg:py-40"
+        >
+            <div class="mx-auto max-w-4xl px-6 lg:px-12">
+                <div class="mb-16 text-center">
+                    <span
+                        class="mb-4 block inline-block border-b border-brand-rose/30 pb-4 text-xs font-semibold tracking-[0.25em] text-brand-rose uppercase"
+                        >Frequently Asked Questions</span
+                    >
+                    <h2
+                        class="font-serif text-5xl leading-tight text-brand-wine lg:text-6xl"
+                    >
+                        Answers &
+                        <span class="font-light text-brand-mauve italic"
+                            >Insights</span
+                        >
+                    </h2>
+                </div>
+
+                <div class="space-y-4">
+                    <div
+                        v-for="(faq, index) in faqs"
+                        :key="index"
+                        class="overflow-hidden rounded-sm border border-brand-rose/20 bg-white transition-all duration-500"
+                        :class="{
+                            'border-brand-rose/50 bg-brand-light/30 shadow-lg':
+                                activeFaq === index,
+                        }"
+                    >
+                        <button
+                            @click="toggleFaq(index)"
+                            class="group flex w-full items-center justify-between p-6 text-left focus:outline-none md:p-8"
+                        >
+                            <span
+                                class="pr-8 font-serif text-2xl text-brand-wine transition-colors group-hover:text-brand-rose"
+                            >
+                                {{ faq.question }}
+                            </span>
+                            <div
+                                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-brand-rose/30 bg-white text-brand-rose transition-transform duration-500"
+                                :class="{
+                                    'rotate-180 border-brand-wine bg-brand-wine text-white':
+                                        activeFaq === index,
+                                }"
+                            >
+                                <Plus
+                                    v-if="activeFaq !== index"
+                                    class="h-4 w-4"
+                                />
+                                <Minus v-else class="h-4 w-4" />
+                            </div>
+                        </button>
+
+                        <div
+                            class="grid transition-all duration-500 ease-in-out"
+                            :class="
+                                activeFaq === index
+                                    ? 'grid-rows-[1fr] opacity-100'
+                                    : 'grid-rows-[0fr] opacity-0'
+                            "
+                        >
+                            <div class="overflow-hidden">
+                                <div
+                                    class="mt-2 border-t border-brand-rose/10 p-6 pt-0 font-sans leading-relaxed font-light text-brand-wine/80 md:p-8"
+                                >
+                                    {{ faq.answer }}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

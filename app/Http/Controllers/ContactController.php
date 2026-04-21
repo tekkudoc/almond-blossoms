@@ -9,26 +9,36 @@ class ContactController extends Controller
 {
     public function store(Request $request)
     {
+        //dd($request->all());
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'phone' => 'nullable|string|max:50',
-            'date' => 'nullable|string|max:100',
-            'event_type' => 'required|string|max:100',
+            'phone' => 'required|string|max:50',
+            'event_location' => 'required|string|max:255',
+            'event_type' => 'nullable|string|max:100',
+            'event_date' => 'nullable|string|max:100',
+            'guest_numbers' => 'nullable|string|max:100',
+            'approximate_budget' => 'required|string|max:100',
+            'found_us_via' => 'required|string|max:100',
             'message' => 'required|string',
         ]);
 
-        // Map the Vue form 'date' to the database 'event_date'
         Inquiry::create([
-            'name' => $validated['name'],
+            'first_name' => $validated['first_name'],
+            'last_name' => $validated['last_name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'],
-            'event_date' => $validated['date'],
             'event_type' => $validated['event_type'],
+            'event_location' => $validated['event_location'],
+            'event_date' => $validated['event_date'],
+            'guest_numbers' => $validated['guest_numbers'],
+            'approximate_budget' => $validated['approximate_budget'],
+            'found_us_via' => $validated['found_us_via'],
             'message' => $validated['message'],
         ]);
 
-        // Return a flash message that the Contact.vue page will catch
+
         return redirect()->back()->with('success', 'Thank you. Your inquiry has been received.');
     }
 }

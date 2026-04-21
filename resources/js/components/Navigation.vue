@@ -4,8 +4,7 @@ import { Link } from '@inertiajs/vue3';
 
 const isMobileMenuOpen = ref(false);
 
-// FIX: Always animate the header slide-down since preloader always shows now.
-// Removed the sessionStorage gate — header-slide-down runs on every page.
+// Always animate the header slide-down since preloader always shows now.
 const showSlideDownAnimation = ref(false);
 
 const closeMenu = () => {
@@ -26,7 +25,7 @@ const handleEscape = (e) => {
 
 onMounted(() => {
     document.addEventListener('keydown', handleEscape);
-    // Always play the slide-down animation since preloader always runs
+    // Play the slide-down animation to sync with the preloader
     showSlideDownAnimation.value = true;
 });
 
@@ -38,7 +37,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleEscape));
         <header
             :class="[
                 'fixed top-0 z-40 w-full border-b border-brand-rose/20 bg-brand-blush/85 backdrop-blur-md',
-                showSlideDownAnimation ? 'header-slide-down' : 'header-visible',
+                showSlideDownAnimation ? 'header-slide-down' : '',
             ]"
         >
             <div
@@ -52,12 +51,13 @@ onUnmounted(() => document.removeEventListener('keydown', handleEscape));
                     <div
                         class="flex flex-col border-l border-brand-rose pl-3 text-left"
                     >
+                        <!-- Add tracking-widest and use font-sans (Georgia) so it is readable -->
                         <span
-                            class="font-serif text-sm leading-none tracking-[0.2em] text-brand-wine uppercase"
+                            class="font-sans text-sm leading-none font-semibold tracking-[0.2em] text-brand-wine uppercase"
                             >Almond-Blossoms</span
                         >
                         <span
-                            class="mt-1 font-serif text-[0.65rem] leading-none tracking-[0.15em] text-brand-mauve uppercase"
+                            class="mt-1 font-sans text-[0.65rem] leading-none font-bold tracking-[0.15em] text-brand-mauve uppercase"
                             >Events</span
                         >
                     </div>
@@ -97,6 +97,8 @@ onUnmounted(() => document.removeEventListener('keydown', handleEscape));
                                 ></path>
                             </svg>
                         </Link>
+
+                        <!-- Dropdown Menu Box -->
                         <div
                             class="invisible absolute top-full left-1/2 w-56 -translate-x-1/2 translate-y-2 transform pt-4 opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
                         >
@@ -121,6 +123,27 @@ onUnmounted(() => document.removeEventListener('keydown', handleEscape));
                                     <span
                                         class="font-serif text-lg text-brand-rose/50 italic"
                                         >II.</span
+                                    >
+                                </Link>
+                                <!-- ADDED: Event Creche -->
+                                <Link
+                                    href="/creche"
+                                    class="flex items-center justify-between px-6 py-4 text-xs font-semibold tracking-[0.15em] text-brand-wine uppercase transition-colors hover:bg-brand-light hover:text-brand-rose"
+                                >
+                                    Event Creche
+                                    <span
+                                        class="font-serif text-lg text-brand-rose/50 italic"
+                                        >III.</span
+                                    >
+                                </Link>
+                                <Link
+                                    href="/vendors"
+                                    class="flex items-center justify-between px-6 py-4 text-xs font-semibold tracking-[0.15em] text-brand-wine uppercase transition-colors hover:bg-brand-light hover:text-brand-rose"
+                                >
+                                    Vendors & Venues
+                                    <span
+                                        class="font-serif text-lg text-brand-rose/50 italic"
+                                        >IV.</span
                                     >
                                 </Link>
                             </div>
@@ -163,6 +186,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleEscape));
 
         <!-- Mobile Navigation Drawer -->
         <div class="md:hidden">
+            <!-- Dark Overlay -->
             <transition
                 enter-active-class="transition-opacity duration-300"
                 enter-from-class="opacity-0"
@@ -179,6 +203,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleEscape));
                 ></div>
             </transition>
 
+            <!-- Sliding Menu -->
             <div
                 :class="isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'"
                 class="fixed top-0 right-0 z-[50] flex h-full w-full transform flex-col overflow-y-auto bg-brand-blush shadow-2xl transition-transform duration-500 ease-in-out sm:w-80"
@@ -191,16 +216,18 @@ onUnmounted(() => document.removeEventListener('keydown', handleEscape));
                             >AB</span
                         >
                         <div
-                            class="flex flex-col border-l border-brand-rose pl-3"
+                            class="flex flex-col border-l border-brand-rose pl-3 text-left"
                         >
                             <span
-                                class="font-serif text-xs leading-none tracking-[0.2em] text-brand-wine uppercase"
-                                >Almond-Blossoms</span
+                                class="font-sans text-[0.7rem] leading-none font-bold tracking-[0.2em] text-brand-wine uppercase"
                             >
+                                Almond-Blossoms
+                            </span>
                             <span
-                                class="mt-1 font-serif text-[0.6rem] leading-none tracking-[0.15em] text-brand-mauve uppercase"
-                                >Events</span
+                                class="mt-1 font-sans text-[0.6rem] leading-none font-bold tracking-[0.15em] text-brand-mauve uppercase"
                             >
+                                Events
+                            </span>
                         </div>
                     </div>
                     <button
@@ -237,6 +264,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleEscape));
                         class="block border-b border-brand-rose/10 py-3 text-sm font-semibold tracking-[0.2em] text-brand-wine uppercase transition-colors hover:text-brand-rose"
                         >Our Story</Link
                     >
+
                     <div class="border-b border-brand-rose/10 py-3">
                         <Link
                             href="/services"
@@ -244,6 +272,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleEscape));
                             class="flex items-center justify-between text-sm font-semibold tracking-[0.2em] text-brand-wine uppercase transition-colors hover:text-brand-rose"
                             >Services</Link
                         >
+
                         <div
                             class="mt-4 flex flex-col space-y-4 border-l border-brand-rose/30 pl-4"
                         >
@@ -252,7 +281,8 @@ onUnmounted(() => document.removeEventListener('keydown', handleEscape));
                                 @click="closeMenu"
                                 class="flex items-center gap-3 text-xs font-semibold tracking-[0.2em] text-brand-wine/70 uppercase transition-colors hover:text-brand-rose"
                             >
-                                <span class="font-serif text-brand-mauve italic"
+                                <span
+                                    class="font-serif text-sm text-brand-mauve italic"
                                     >I.</span
                                 >
                                 Weddings
@@ -262,13 +292,39 @@ onUnmounted(() => document.removeEventListener('keydown', handleEscape));
                                 @click="closeMenu"
                                 class="flex items-center gap-3 text-xs font-semibold tracking-[0.2em] text-brand-wine/70 uppercase transition-colors hover:text-brand-rose"
                             >
-                                <span class="font-serif text-brand-mauve italic"
+                                <span
+                                    class="font-serif text-sm text-brand-mauve italic"
                                     >II.</span
                                 >
                                 Celebrations
                             </Link>
+                            <!-- ADDED: Event Creche -->
+                            <Link
+                                href="/creche"
+                                @click="closeMenu"
+                                class="flex items-center gap-3 text-xs font-semibold tracking-[0.2em] text-brand-wine/70 uppercase transition-colors hover:text-brand-rose"
+                            >
+                                <span
+                                    class="font-serif text-sm text-brand-mauve italic"
+                                    >III.</span
+                                >
+                                Event Creche
+                            </Link>
+
+                            <Link
+                                href="/vendors"
+                                @click="closeMenu"
+                                class="flex items-center gap-3 text-xs font-semibold tracking-[0.2em] text-brand-wine/70 uppercase transition-colors hover:text-brand-rose"
+                            >
+                                <span
+                                    class="font-serif text-sm text-brand-mauve italic"
+                                    >IV.</span
+                                >
+                                Vendors & Venues
+                            </Link>
                         </div>
                     </div>
+
                     <Link
                         href="/journal"
                         @click="closeMenu"

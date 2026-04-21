@@ -32,6 +32,26 @@ Route::get('/celebrations', function () {
     return Inertia::render('Celebration');
 })->name('celebration');
 
+Route::get('/creche', function () {
+    return Inertia::render('Creche');
+})->name('services.creche');
+
+Route::get('/vendors', function () {
+    return Inertia::render('Vendors');
+})->name('vendors');
+
+Route::get('/privacy-policy', function () {
+    return Inertia::render('PrivacyPolicy');
+})->name('privacy');
+
+Route::get('/terms-and-conditions', function () {
+    return Inertia::render('Terms');
+})->name('terms');
+
+Route::get('/photography-credits', function () {
+    return Inertia::render('Credits');
+})->name('credits');
+
 Route::get('/celebrations', [CelebrationController::class, 'index'])->name('celebrations.index');
 
 Route::get('/journal', [JournalController::class, 'index'])->name('journal.index');

@@ -1,26 +1,19 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
-import PublicLayout from '@/Layouts/PublicLayout.vue';
+import PublicLayout from '@/layouts/PublicLayout.vue';
 
-defineOptions({
-    layout: PublicLayout,
-});
+defineOptions({ layout: PublicLayout });
 </script>
 
 <template>
     <Head title="Services | Almond-Blossoms Events" />
 
     <div>
-        <!-- ============================================ -->
-        <!-- HERO                                         -->
-        <!-- ============================================ -->
         <section
-            class="fade-up relative flex min-h-[75vh] flex-col items-center justify-center px-6 pt-32 pb-20 text-center"
-            style="animation-delay: 4.2s"
+            class="fade-up relative mt-24 flex h-[75vh] flex-col items-center justify-center px-6 text-center"
         >
-            <!-- Watermark -->
             <div
-                class="pointer-events-none absolute top-1/2 left-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 select-none font-serif text-[20vw] leading-none text-brand-rose/5 italic"
+                class="pointer-events-none absolute top-1/2 left-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 transform font-serif text-[20vw] leading-none text-brand-rose/5 italic select-none"
             >
                 Services
             </div>
@@ -32,85 +25,70 @@ defineOptions({
             </span>
 
             <h1
-                class="mx-auto mb-8 max-w-5xl font-serif text-4xl leading-[1.1] text-brand-wine sm:text-5xl md:text-7xl lg:text-8xl"
+                class="mx-auto mb-8 max-w-5xl font-serif text-5xl leading-[1.1] text-brand-wine md:text-7xl lg:text-8xl"
             >
-                Just The Two Of Us
-                <br />
+                Just The Two Of Us <br />
                 <span class="font-light text-brand-mauve italic"
-                >&amp; Our Loved Ones</span
+                    >& Our Loved Ones</span
                 >
             </h1>
 
             <p
-                class="mx-auto max-w-2xl text-base leading-relaxed font-light text-brand-wine/70 sm:text-lg"
+                class="mx-auto max-w-2xl font-sans text-lg leading-relaxed font-light text-brand-wine/70"
             >
-                We appreciate that no two weddings are the same. Not everyone
-                is in need of full design. We delight in encouraging you to
-                choose the exact level of support that meets your unique vision.
+                We appreciate the fact that no two weddings are the same and
+                that not everyone needs full wedding design and planning
+                services. We therefore delight in encouraging you to choose
+                services and products that best meet your needs and preferences.
             </p>
 
-            <!-- Scroll prompt — hidden on mobile, no bounce -->
             <div
-                class="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center sm:flex"
+                class="absolute bottom-10 flex hidden animate-bounce flex-col items-center md:flex"
             >
                 <span
                     class="mb-2 text-[0.65rem] tracking-widest text-brand-mauve uppercase"
-                >Scroll to Discover</span
+                    >Scroll to Discover</span
                 >
                 <div class="h-10 w-px bg-brand-rose"></div>
             </div>
         </section>
 
-        <!-- ============================================ -->
-        <!-- CINEMATIC STACK                              -->
-        <!-- ============================================ -->
+        <!-- THE CINEMATIC STACK (Directory) -->
         <div class="relative w-full">
-
-            <!-- 01 — WEDDINGS -->
+            <!-- 01. WEDDINGS -->
             <section
-                class="relative z-10 flex w-full flex-col overflow-hidden bg-brand-light shadow-[0_-10px_40px_rgba(0,0,0,0.05)] md:sticky md:top-0 md:h-[100svh] md:flex-row md:items-stretch"
+                class="relative z-10 flex h-auto w-full flex-col items-center justify-center overflow-hidden bg-brand-light shadow-[0_-10px_40px_rgba(0,0,0,0.05)] md:sticky md:top-0 md:h-[100svh] md:flex-row"
             >
-                <!-- Text half -->
                 <div
-                    class="relative flex w-full flex-col justify-center p-8 py-16 md:h-full md:w-1/2 lg:p-24"
+                    class="relative flex h-auto w-full flex-col justify-center p-12 md:h-full md:w-1/2 lg:p-24"
                 >
                     <span
-                        class="pointer-events-none absolute top-12 left-8 select-none font-serif text-[8rem] leading-none text-brand-rose/10 italic sm:text-[12rem] lg:left-24"
-                    >01</span
+                        class="pointer-events-none absolute top-20 left-12 font-serif text-[12rem] leading-none text-brand-rose/10 italic select-none lg:left-24"
+                        >01</span
                     >
                     <div class="relative z-10">
                         <span
                             class="mb-6 block w-max border-b border-brand-rose/30 pb-2 text-xs font-semibold tracking-[0.25em] text-brand-rose uppercase"
-                        >Bespoke Planning</span
+                            >Bespoke Planning</span
                         >
                         <h2
-                            class="mb-8 font-serif text-5xl leading-none text-brand-wine lg:text-7xl"
+                            class="mb-8 font-serif text-6xl leading-none text-brand-wine lg:text-7xl"
                         >
                             Weddings.
                         </h2>
-                        <p
-                            class="mb-10 max-w-md text-base leading-relaxed font-light text-brand-wine/80 sm:text-lg"
-                        >
-                            Our signature planning service. We handle the
-                            logistics, aesthetics, and endless details from
-                            start to finish, so you can simply live in the
-                            moment.
-                        </p>
                         <Link
                             href="/wedding"
-                            class="group inline-flex items-center gap-4 text-xs tracking-widest text-brand-wine uppercase transition-colors hover:text-brand-rose"
+                            class="group mt-4 inline-flex items-center gap-4 text-xs tracking-widest text-brand-wine uppercase transition-colors hover:text-brand-rose"
                         >
-                            <span>Explore Weddings</span>
+                            <span>About Weddings</span>
                             <div
-                                class="h-px w-12 bg-brand-wine transition-all duration-500 group-hover:w-16 group-hover:bg-brand-rose"
+                                class="h-[1px] w-12 bg-brand-wine transition-all duration-400 group-hover:w-16 group-hover:bg-brand-rose"
                             ></div>
                         </Link>
                     </div>
                 </div>
-
-                <!-- Image half -->
                 <div
-                    class="img-zoom-container group h-64 w-full flex-shrink-0 md:h-full md:w-1/2"
+                    class="group h-[50vh] w-full overflow-hidden md:h-full md:w-1/2"
                 >
                     <img
                         src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200"
@@ -120,52 +98,42 @@ defineOptions({
                 </div>
             </section>
 
-            <!-- 02 — CELEBRATIONS -->
+            <!-- 02. CELEBRATIONS -->
             <section
-                class="relative z-20 flex w-full flex-col overflow-hidden bg-brand-wine text-brand-light shadow-[0_-20px_50px_rgba(0,0,0,0.3)] md:sticky md:top-0 md:h-[100svh] md:flex-row-reverse md:items-stretch"
+                class="relative z-20 flex h-auto w-full flex-col items-center justify-center overflow-hidden bg-brand-wine text-brand-light shadow-[0_-20px_50px_rgba(0,0,0,0.3)] md:sticky md:top-0 md:h-[100svh] md:flex-row-reverse"
             >
-                <!-- Text half -->
                 <div
-                    class="relative flex w-full flex-col justify-center p-8 py-16 md:h-full md:w-1/2 lg:p-24"
+                    class="relative flex h-auto w-full flex-col justify-center p-12 md:h-full md:w-1/2 lg:p-24"
                 >
                     <span
-                        class="pointer-events-none absolute top-12 right-8 select-none font-serif text-[8rem] leading-none text-brand-rose/5 italic sm:text-[12rem] lg:right-24"
-                    >02</span
+                        class="pointer-events-none absolute top-20 right-12 font-serif text-[12rem] leading-none text-brand-rose/5 italic select-none lg:right-24"
+                        >02</span
                     >
                     <div
                         class="relative z-10 flex flex-col md:ml-auto md:items-end md:text-right"
                     >
                         <span
                             class="mb-6 block w-max border-b border-brand-rose/30 pb-2 text-xs font-semibold tracking-[0.25em] text-brand-rose uppercase"
-                        >Exclusive Soirées</span
+                            >Exclusive Soirées</span
                         >
                         <h2
-                            class="mb-8 font-serif text-5xl leading-none text-brand-blush lg:text-7xl"
+                            class="mb-8 font-serif text-6xl leading-none text-brand-blush lg:text-7xl"
                         >
                             Celebrations.
                         </h2>
-                        <p
-                            class="mb-10 max-w-md text-base leading-relaxed font-light text-brand-light/80 sm:text-lg"
-                        >
-                            From milestone birthdays to intimate private
-                            dinners. We design spectacular and flawless events
-                            that leave a sensational impression on your guests.
-                        </p>
                         <Link
                             href="/celebrations"
-                            class="group inline-flex flex-row-reverse items-center gap-4 text-xs tracking-widest text-brand-blush uppercase transition-colors hover:text-brand-rose md:flex-row"
+                            class="group mt-4 inline-flex flex-row-reverse items-center gap-4 text-xs tracking-widest text-brand-blush uppercase transition-colors hover:text-brand-rose md:flex-row"
                         >
-                            <span>Explore Events</span>
+                            <span>About Events</span>
                             <div
-                                class="h-px w-12 bg-brand-blush transition-all duration-500 group-hover:w-16 group-hover:bg-brand-rose"
+                                class="h-[1px] w-12 bg-brand-blush transition-all duration-400 group-hover:w-16 group-hover:bg-brand-rose"
                             ></div>
                         </Link>
                     </div>
                 </div>
-
-                <!-- Image half -->
                 <div
-                    class="img-zoom-container group relative h-64 w-full flex-shrink-0 md:h-full md:w-1/2"
+                    class="group relative h-[50vh] w-full overflow-hidden md:h-full md:w-1/2"
                 >
                     <div
                         class="absolute inset-0 z-10 bg-brand-dark/20 transition-colors duration-1000 group-hover:bg-transparent"
@@ -178,51 +146,40 @@ defineOptions({
                 </div>
             </section>
 
-            <!-- 03 — CRECHE -->
+            <!-- 03. CRECHE -->
             <section
-                class="relative z-30 flex w-full flex-col overflow-hidden bg-brand-blush shadow-[0_-20px_50px_rgba(0,0,0,0.15)] md:sticky md:top-0 md:h-[100svh] md:flex-row md:items-stretch"
+                class="relative z-30 flex h-auto w-full flex-col items-center justify-center overflow-hidden bg-brand-blush shadow-[0_-20px_50px_rgba(0,0,0,0.15)] md:sticky md:top-0 md:h-[100svh] md:flex-row"
             >
-                <!-- Text half -->
                 <div
-                    class="relative flex w-full flex-col justify-center p-8 py-16 md:h-full md:w-1/2 lg:p-24"
+                    class="relative flex h-auto w-full flex-col justify-center p-12 md:h-full md:w-1/2 lg:p-24"
                 >
                     <span
-                        class="pointer-events-none absolute top-12 left-8 select-none font-serif text-[8rem] leading-none text-brand-rose/10 italic sm:text-[12rem] lg:left-24"
-                    >03</span
+                        class="pointer-events-none absolute top-20 left-12 font-serif text-[12rem] leading-none text-brand-rose/10 italic select-none lg:left-24"
+                        >03</span
                     >
                     <div class="relative z-10">
                         <span
                             class="mb-6 block w-max border-b border-brand-rose/30 pb-2 text-xs font-semibold tracking-[0.25em] text-brand-rose uppercase"
-                        >Dedicated Childcare</span
+                            >Dedicated Childcare</span
                         >
                         <h2
-                            class="mb-8 font-serif text-5xl leading-none text-brand-wine lg:text-7xl"
+                            class="mb-8 font-serif text-6xl leading-none text-brand-wine lg:text-7xl"
                         >
                             Event Creche.
                         </h2>
-                        <p
-                            class="mb-10 max-w-md text-base leading-relaxed font-light text-brand-wine/80 sm:text-lg"
-                        >
-                            Professional, high-quality childcare ensuring your
-                            youngest guests are entertained safely and
-                            joyfully — giving parents the ultimate gift: peace
-                            of mind.
-                        </p>
                         <Link
-                            href="/contact"
-                            class="group inline-flex items-center gap-4 text-xs tracking-widest text-brand-wine uppercase transition-colors hover:text-brand-rose"
+                            href="/creche"
+                            class="group mt-4 inline-flex items-center gap-4 text-xs tracking-widest text-brand-wine uppercase transition-colors hover:text-brand-rose"
                         >
-                            <span>Enquire About Creche</span>
+                            <span>About Creche</span>
                             <div
-                                class="h-px w-12 bg-brand-wine transition-all duration-500 group-hover:w-16 group-hover:bg-brand-rose"
+                                class="h-[1px] w-12 bg-brand-wine transition-all duration-400 group-hover:w-16 group-hover:bg-brand-rose"
                             ></div>
                         </Link>
                     </div>
                 </div>
-
-                <!-- Image half -->
                 <div
-                    class="img-zoom-container group h-64 w-full flex-shrink-0 md:h-full md:w-1/2"
+                    class="group h-[50vh] w-full overflow-hidden md:h-full md:w-1/2"
                 >
                     <img
                         src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?q=80&w=1200"
@@ -232,9 +189,7 @@ defineOptions({
                 </div>
             </section>
 
-            <!-- ============================================ -->
-            <!-- MISSION STATEMENT                            -->
-            <!-- ============================================ -->
+            <!-- MISSION STATEMENT -->
             <section
                 class="relative z-40 overflow-hidden bg-brand-dark px-6 py-32 text-center shadow-[0_-30px_60px_rgba(0,0,0,0.5)] lg:py-48"
             >
@@ -242,63 +197,161 @@ defineOptions({
                     <img
                         src="https://images.unsplash.com/photo-1518049362265-d5b2a6467637?q=80&w=2000&auto=format&fit=crop"
                         class="h-full w-full object-cover"
-                        alt=""
+                        alt="texture"
                     />
                 </div>
                 <div class="relative z-10 mx-auto max-w-5xl">
                     <h2
-                        class="mb-12 font-serif text-3xl leading-[1.3] font-light text-brand-blush italic sm:text-4xl md:text-5xl lg:text-6xl"
+                        class="mb-12 font-serif text-4xl leading-[1.3] font-light text-brand-blush italic md:text-5xl lg:text-6xl"
                     >
-                        "Our mission is to help couples leave the stress of
-                        planning behind and experience the
-                        <span class="font-medium text-brand-rose">true joy</span>
-                        of a wedding with their nearest and dearest."
+                        "Our goal is to help couples who see value in having an
+                        intimate wedding, leave the stress of planning behind
+                        and experience the
+                        <span class="font-medium text-brand-rose"
+                            >joy of a wedding</span
+                        >
+                        with their nearest and dearest."
                     </h2>
-                    <div class="flex flex-col items-center">
-                        <div
-                            class="mb-2 -rotate-2 font-signature text-6xl leading-none text-brand-rose/90"
-                        >
-                            Judith
-                        </div>
-                        <p
-                            class="mt-2 text-[0.65rem] font-semibold tracking-[0.25em] text-brand-rose/60 uppercase"
-                        >
-                            The Almond-Blossoms Promise
-                        </p>
-                    </div>
                 </div>
             </section>
 
-            <!-- ============================================ -->
-            <!-- AS FEATURED IN                               -->
-            <!-- ============================================ -->
-            <section
-                class="relative z-40 border-b border-brand-rose/20 bg-brand-blush py-16"
-            >
-                <div class="mx-auto flex max-w-6xl flex-col items-center px-6">
+            <!-- HOW IT WORKS (NEW SECTION) -->
+            <section class="relative z-40 bg-brand-light py-24 lg:py-40">
+                <div class="mx-auto max-w-5xl px-6 text-center lg:px-12">
+                    <span
+                        class="mb-2 block font-signature text-5xl text-brand-rose"
+                        >How it works</span
+                    >
+                    <h2
+                        class="mb-8 font-serif text-4xl leading-tight text-brand-wine lg:text-5xl"
+                    >
+                        At Almond Blossoms, we focus in creating thoughtful
+                        personalised design that is curated to reflect
+                        individual unique style and vision.
+                    </h2>
                     <p
-                        class="mb-10 text-center text-xs font-semibold tracking-[0.25em] text-brand-mauve uppercase"
+                        class="mx-auto mb-24 max-w-3xl font-sans text-lg font-light text-brand-wine/70"
                     >
-                        As Featured In
+                        Our work is refined favouring quiet elegance over excess
+                        without following trends.
                     </p>
-                    <div
-                        class="flex flex-wrap items-center justify-center gap-12 opacity-60 grayscale transition-all duration-700 hover:grayscale-0 md:gap-24"
-                    >
-                        <h3
-                            class="font-serif text-2xl text-brand-wine italic lg:text-3xl"
+
+                    <!-- The Vertical Timeline -->
+                    <div class="relative space-y-24 text-left">
+                        <!-- Timeline Line Background -->
+                        <div
+                            class="absolute top-0 bottom-0 left-[23px] hidden w-px bg-brand-rose/30 md:left-1/2 md:block"
+                        ></div>
+
+                        <!-- STEP 1 -->
+                        <div
+                            class="group relative flex flex-col items-center justify-between gap-8 md:flex-row md:gap-16"
                         >
-                            Wedding Suppliers
-                        </h3>
-                        <h3
-                            class="font-serif text-2xl tracking-widest text-brand-wine uppercase lg:text-3xl"
+                            <div class="z-10 w-full md:w-1/2 md:text-right">
+                                <span
+                                    class="mb-2 block font-signature text-4xl text-brand-rose"
+                                    >Step One</span
+                                >
+                                <h3
+                                    class="mb-4 font-serif text-3xl text-brand-wine"
+                                >
+                                    Enquire & Consultation
+                                </h3>
+                                <p
+                                    class="font-sans leading-relaxed font-light text-brand-wine/70"
+                                >
+                                    We learn about your vision and event needs.
+                                    Start by getting in touch with us via the
+                                    contact form to share your event details. We
+                                    will arrange a consultation through phone or
+                                    video call to get to know you and understand
+                                    your vision, requirements, and how we can
+                                    best support you and create a quotation
+                                    based on your needs.
+                                </p>
+                            </div>
+                            <div
+                                class="absolute left-0 z-20 flex hidden h-12 w-12 items-center justify-center rounded-full border-[3px] border-brand-rose bg-brand-blush font-serif text-xl text-brand-wine shadow-lg transition-colors duration-500 group-hover:bg-brand-rose group-hover:text-white md:left-1/2 md:-ml-6 md:flex"
+                            >
+                                1
+                            </div>
+                            <div class="w-full md:w-1/2"></div>
+                        </div>
+
+                        <!-- STEP 2 -->
+                        <div
+                            class="group relative flex flex-col items-center justify-between gap-8 md:flex-row-reverse md:gap-16"
                         >
-                            Hitched
-                        </h3>
-                        <h3
-                            class="font-serif text-2xl tracking-tighter text-brand-wine italic lg:text-3xl"
+                            <div class="z-10 w-full text-left md:w-1/2">
+                                <span
+                                    class="mb-2 block font-signature text-4xl text-brand-rose"
+                                    >Step Two</span
+                                >
+                                <h3
+                                    class="mb-4 font-serif text-3xl text-brand-wine"
+                                >
+                                    Plan & Coordinate
+                                </h3>
+                                <p
+                                    class="font-sans leading-relaxed font-light text-brand-wine/70"
+                                >
+                                    We organise every detail with precision.
+                                    When you agree to our services and your
+                                    deposit is received, we start working on the
+                                    proposal and create a concept working
+                                    alongside the best vendors and venues that
+                                    suite your needs. We handle timelines,
+                                    supplier communication, and key
+                                    logistics—ensuring every detail is organised
+                                    and aligned with your vision.
+                                </p>
+                            </div>
+                            <div
+                                class="absolute left-0 z-20 flex hidden h-12 w-12 items-center justify-center rounded-full border-[3px] border-brand-rose bg-brand-blush font-serif text-xl text-brand-wine shadow-lg transition-colors duration-500 group-hover:bg-brand-rose group-hover:text-white md:left-1/2 md:-ml-6 md:flex"
+                            >
+                                2
+                            </div>
+                            <div class="w-full md:w-1/2"></div>
+                        </div>
+
+                        <!-- STEP 3 -->
+                        <div
+                            class="group relative flex flex-col items-center justify-between gap-8 md:flex-row md:gap-16"
                         >
-                            BRIDES
-                        </h3>
+                            <div class="z-10 w-full md:w-1/2 md:text-right">
+                                <span
+                                    class="mb-2 block font-signature text-4xl text-brand-rose"
+                                    >Step Three</span
+                                >
+                                <h3
+                                    class="mb-4 font-serif text-3xl text-brand-wine"
+                                >
+                                    Deliver Seamlessly
+                                </h3>
+                                <p
+                                    class="mb-6 font-sans leading-relaxed font-light text-brand-wine/70"
+                                >
+                                    You enjoy your event while we manage
+                                    everything behind the scenes. On the day, we
+                                    manage everything from start to finish—so
+                                    you can relax and enjoy your event while we
+                                    ensure everything runs smoothly with
+                                    optional childcare services ensuring all
+                                    guests are cared for and comfortable.
+                                </p>
+                                <Link
+                                    href="/contact"
+                                    class="font-signature text-3xl text-brand-rose transition-colors hover:text-brand-wine"
+                                    >( Say Hello )</Link
+                                >
+                            </div>
+                            <div
+                                class="absolute left-0 z-20 flex hidden h-12 w-12 items-center justify-center rounded-full border-[3px] border-brand-rose bg-brand-blush font-serif text-xl text-brand-wine shadow-lg transition-colors duration-500 group-hover:bg-brand-rose group-hover:text-white md:left-1/2 md:-ml-6 md:flex"
+                            >
+                                3
+                            </div>
+                            <div class="w-full md:w-1/2"></div>
+                        </div>
                     </div>
                 </div>
             </section>

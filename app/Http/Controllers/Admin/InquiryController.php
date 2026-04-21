@@ -13,10 +13,15 @@ class InquiryController extends Controller
         // Fetch inquiries for the table
         $inquiries = Inquiry::latest()->paginate(15)->through(fn ($inquiry) => [
             'id' => $inquiry->id,
-            'name' => $inquiry->name,
+            'first_name' => $inquiry->first_name,
+            'last_name' => $inquiry->last_name,
             'email' => $inquiry->email,
             'phone' => $inquiry->phone,
+            'event_location' => $inquiry->event_location,
             'event_date' => $inquiry->event_date,
+            'guest_numbers' => $inquiry->guest_numbers,
+            'approximate_budget' => $inquiry->approximate_budget,
+            'found_us_via' => $inquiry->found_us_via,
             'event_type' => $inquiry->event_type,
             'message' => $inquiry->message,
             'status' => $inquiry->status,

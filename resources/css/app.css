@@ -9,10 +9,10 @@
     --color-brand-wine: #5A182C;
     --color-brand-dark: #3d0d1c;
 
-    /* Custom Fonts */
-    --font-sans: "Montserrat", sans-serif;
-    --font-serif: "Cormorant Garamond", serif;
-    --font-signature: "Great Vibes", cursive;
+    /* Custom Fonts for the New Brand Identity */
+    --font-sans: "Georgia", serif; /* Body text is now Georgia */
+    --font-serif: "Lavishly Yours", cursive; /* Main Headings */
+    --font-signature: "Tangerine", cursive; /* Subheadings */
 }
 
 /* --- Base Body Styles --- */

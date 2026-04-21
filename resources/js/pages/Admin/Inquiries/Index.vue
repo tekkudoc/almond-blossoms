@@ -15,6 +15,10 @@ import {
     AlertCircle,
     BellDot,
     EyeOff,
+    MapPin,
+    PoundSterling,
+    Users,
+    Search,
 } from 'lucide-vue-next';
 
 defineOptions({ layout: AppLayout });
@@ -63,7 +67,6 @@ const openInquiry = (inquiry) => {
     }
 };
 
-// THE NEW FUNCTION: Mark as Unread
 const markAsUnread = () => {
     if (selectedInquiry.value) {
         router.put(
@@ -75,11 +78,8 @@ const markAsUnread = () => {
             },
         );
 
-        // Optimistically update the UI
         selectedInquiry.value.status = 'unread';
         props.metrics.unread++;
-
-        // Close the pane so she sees it back in the unread state in the main list
         closePane();
     }
 };
@@ -97,7 +97,8 @@ const isDeleteModalOpen = ref(false);
 const inquiryToDelete = ref(null);
 
 const openDeleteModal = (inquiry) => {
-    inquiryToDelete.value = inquiry;
+    // FIX 1: Unwrap the ref if a ref object is accidentally passed (e.g. from pane header)
+    inquiryToDelete.value = inquiry?.value ?? inquiry;
     isDeleteModalOpen.value = true;
 };
 
@@ -108,14 +109,15 @@ const closeDeleteModal = () => {
 
 const confirmDelete = () => {
     if (inquiryToDelete.value) {
-        router.delete(`/admin/inquiries/${inquiryToDelete.value.id}`, {
+        // FIX 2: Capture the ID before closeDeleteModal() nulls out inquiryToDelete
+        const deletingId = inquiryToDelete.value.id;
+
+        router.delete(`/admin/inquiries/${deletingId}`, {
             preserveScroll: true,
             onSuccess: () => {
                 closeDeleteModal();
-                if (
-                    selectedInquiry.value &&
-                    selectedInquiry.value.id === inquiryToDelete.value.id
-                ) {
+                // FIX 3: Use the captured ID for the comparison, not the now-null ref
+                if (selectedInquiry.value?.id === deletingId) {
                     closePane();
                 }
             },
@@ -138,7 +140,7 @@ const formatEventType = (type) => {
 <template>
     <Head title="Inquiries | Almond-Blossoms" />
 
-    <!-- ALERTS & MODALS (Kept exactly as we fixed them in the previous steps) -->
+    <!-- ALERTS & MODALS -->
     <transition
         enter-active-class="transform transition duration-500 ease-out"
         enter-from-class="translate-y-10 opacity-0"
@@ -195,7 +197,8 @@ const formatEventType = (type) => {
                         Are you sure you want to permanently delete the message
                         from
                         <span class="font-semibold text-brand-wine italic"
-                            >"{{ inquiryToDelete?.name }}"</span
+                            >"{{ inquiryToDelete?.first_name }}
+                            {{ inquiryToDelete?.last_name }}"</span
                         >? This cannot be undone.
                     </p>
                     <div class="flex flex-col gap-4 sm:flex-row">
@@ -231,7 +234,7 @@ const formatEventType = (type) => {
             </p>
         </div>
 
-        <!-- NEW: KPI Metric Bar -->
+        <!-- KPI Metric Bar -->
         <div class="mb-10 grid grid-cols-2 gap-4 md:grid-cols-4">
             <div
                 class="group relative flex flex-col justify-center overflow-hidden rounded-sm border border-brand-rose/20 bg-white p-6 shadow-sm"
@@ -253,7 +256,6 @@ const formatEventType = (type) => {
                     />
                 </div>
             </div>
-
             <div
                 class="flex flex-col justify-center rounded-sm border border-brand-rose/20 bg-white p-6 shadow-sm"
             >
@@ -265,7 +267,6 @@ const formatEventType = (type) => {
                     metrics.weddings
                 }}</span>
             </div>
-
             <div
                 class="flex flex-col justify-center rounded-sm border border-brand-rose/20 bg-white p-6 shadow-sm"
             >
@@ -277,7 +278,6 @@ const formatEventType = (type) => {
                     metrics.celebrations
                 }}</span>
             </div>
-
             <div
                 class="flex flex-col justify-center rounded-sm border border-brand-rose/20 bg-white p-6 shadow-sm"
             >
@@ -296,7 +296,7 @@ const formatEventType = (type) => {
             class="overflow-hidden rounded-md border border-brand-rose/20 bg-white shadow-[0_4px_20px_-10px_rgba(90,24,44,0.1)]"
         >
             <div
-                v-if="inquiries.data.length === 0"
+                v-if="!inquiries?.data || inquiries.data.length === 0"
                 class="p-16 text-center text-brand-wine/40"
             >
                 <Mail class="mx-auto mb-4 h-12 w-12 opacity-50" />
@@ -307,11 +307,6 @@ const formatEventType = (type) => {
             </div>
 
             <ul v-else class="divide-y divide-brand-rose/10">
-                <!--
-                    NEW: Distinct styling for Read vs Unread
-                    Unread: Blush background, dark text, rose left border.
-                    Read: White background, faded text, transparent border.
-                -->
                 <li
                     v-for="inquiry in inquiries.data"
                     :key="inquiry.id"
@@ -336,7 +331,6 @@ const formatEventType = (type) => {
                                 v-if="inquiry.status === 'unread'"
                                 class="absolute -top-1 -right-1 h-2 w-2 animate-ping rounded-full bg-brand-rose"
                             ></div>
-
                             <MailOpen
                                 v-if="inquiry.status !== 'unread'"
                                 class="h-5 w-5 text-brand-wine/20"
@@ -347,7 +341,7 @@ const formatEventType = (type) => {
                         <div
                             class="grid min-w-0 flex-1 grid-cols-1 items-center gap-2 sm:grid-cols-12 sm:gap-4"
                         >
-                            <!-- Name is bold if unread, light if read -->
+                            <!-- Name -->
                             <div
                                 class="truncate text-base sm:col-span-3"
                                 :class="
@@ -356,7 +350,7 @@ const formatEventType = (type) => {
                                         : 'font-medium text-brand-wine/60'
                                 "
                             >
-                                {{ inquiry.name }}
+                                {{ inquiry.first_name }} {{ inquiry.last_name }}
                             </div>
 
                             <!-- Category Badge -->
@@ -411,7 +405,6 @@ const formatEventType = (type) => {
         </div>
 
         <!-- Pagination -->
-        <!-- THE FIX: Added ?. to meta and last_page so it won't crash if they are undefined -->
         <div
             v-if="inquiries?.data?.length > 0 && inquiries?.meta?.last_page > 1"
             class="mt-6 flex items-center justify-between text-sm font-light text-brand-wine/60"
@@ -444,7 +437,6 @@ const formatEventType = (type) => {
                 >
                     Prev
                 </button>
-
                 <Link
                     v-if="inquiries.links.next"
                     :href="inquiries.links.next"
@@ -461,12 +453,12 @@ const formatEventType = (type) => {
             </div>
         </div>
 
-        <!-- SLIDE-OVER READING PANE -->
+        <!-- ========================================== -->
+        <!-- SLIDE-OVER READING PANE                    -->
+        <!-- ========================================== -->
         <Teleport to="body">
-            <div
-                v-if="isReadingPaneOpen"
-                class="fixed inset-0 z-[100] flex justify-end"
-            >
+            <div class="relative z-[100]">
+                <!-- Dark Backdrop -->
                 <transition
                     appear
                     enter-active-class="ease-in-out duration-500"
@@ -477,11 +469,13 @@ const formatEventType = (type) => {
                     leave-to-class="opacity-0"
                 >
                     <div
-                        class="absolute inset-0 cursor-pointer bg-brand-dark/40 backdrop-blur-sm"
+                        v-if="isReadingPaneOpen"
+                        class="fixed inset-0 cursor-pointer bg-brand-dark/40 backdrop-blur-sm"
                         @click="closePane"
                     ></div>
                 </transition>
 
+                <!-- Sliding Panel -->
                 <transition
                     appear
                     enter-active-class="transform transition ease-in-out duration-500"
@@ -492,7 +486,8 @@ const formatEventType = (type) => {
                     leave-to-class="translate-x-full"
                 >
                     <div
-                        class="relative flex h-full w-full max-w-2xl flex-col border-l border-brand-rose/30 bg-brand-blush shadow-2xl"
+                        v-if="isReadingPaneOpen"
+                        class="fixed inset-y-0 right-0 flex h-full w-full max-w-2xl flex-col border-l border-brand-rose/30 bg-brand-blush shadow-2xl"
                     >
                         <!-- Pane Header -->
                         <div
@@ -503,7 +498,6 @@ const formatEventType = (type) => {
                             </h2>
 
                             <div class="flex items-center gap-6">
-                                <!-- NEW: Mark as Unread Button -->
                                 <button
                                     @click="markAsUnread"
                                     class="flex items-center gap-2 text-brand-wine/50 transition-colors hover:text-brand-wine focus:outline-none"
@@ -515,19 +509,17 @@ const formatEventType = (type) => {
                                         >Mark Unread</span
                                     >
                                 </button>
-
                                 <div class="h-4 w-px bg-brand-rose/30"></div>
-
-                                <!-- Delete Button inside pane -->
+                                <!-- FIX: Pass selectedInquiry.value, not the ref itself -->
                                 <button
-                                    @click="openDeleteModal(selectedInquiry)"
+                                    @click="
+                                        openDeleteModal(selectedInquiry.value)
+                                    "
                                     class="text-brand-wine/50 transition-colors hover:text-red-500 focus:outline-none"
                                     title="Delete Inquiry"
                                 >
                                     <Trash2 class="h-4 w-4" />
                                 </button>
-
-                                <!-- Close Button -->
                                 <button
                                     @click="closePane"
                                     class="-mr-2 p-2 text-brand-wine/50 transition-colors hover:text-brand-wine focus:outline-none"
@@ -538,9 +530,11 @@ const formatEventType = (type) => {
                             </div>
                         </div>
 
+                        <!-- Pane Content -->
                         <div class="flex-1 overflow-y-auto p-8">
+                            <!-- PRIMARY CONTACT INFO -->
                             <div
-                                class="mb-8 space-y-4 rounded-md border border-brand-rose/10 bg-white p-6 shadow-sm"
+                                class="mb-6 space-y-4 rounded-md border border-brand-rose/10 bg-white p-6 shadow-sm"
                             >
                                 <div
                                     class="flex items-center gap-4 text-brand-wine"
@@ -548,9 +542,10 @@ const formatEventType = (type) => {
                                     <User
                                         class="h-4 w-4 shrink-0 text-brand-rose"
                                     />
-                                    <span class="text-lg font-semibold">{{
-                                        selectedInquiry.name
-                                    }}</span>
+                                    <span class="text-lg font-semibold"
+                                        >{{ selectedInquiry.first_name }}
+                                        {{ selectedInquiry.last_name }}</span
+                                    >
                                 </div>
                                 <div
                                     class="flex items-center gap-4 text-brand-wine"
@@ -579,53 +574,132 @@ const formatEventType = (type) => {
                                         >{{ selectedInquiry.phone }}</a
                                     >
                                 </div>
+                            </div>
+
+                            <!-- THE NEW EVENT DETAILS -->
+                            <div class="mb-8 grid grid-cols-2 gap-4">
                                 <div
-                                    class="mt-4 flex items-center gap-4 border-t border-brand-rose/10 pt-4 text-brand-wine"
+                                    class="rounded-md border border-brand-rose/10 bg-white p-5 shadow-sm"
                                 >
-                                    <Tag
-                                        class="h-4 w-4 shrink-0 text-brand-rose"
-                                    />
                                     <span
-                                        class="text-xs font-semibold tracking-widest text-brand-mauve uppercase"
-                                        >{{
+                                        class="mb-2 block text-[0.6rem] font-bold tracking-widest text-brand-rose uppercase"
+                                        >Event Type</span
+                                    >
+                                    <div
+                                        class="flex items-center gap-3 text-brand-wine"
+                                    >
+                                        <Tag
+                                            class="h-4 w-4 shrink-0 text-brand-rose/60"
+                                        />
+                                        <span class="text-sm font-semibold">{{
                                             formatEventType(
                                                 selectedInquiry.event_type,
                                             )
-                                        }}</span
-                                    >
+                                        }}</span>
+                                    </div>
                                 </div>
                                 <div
-                                    v-if="selectedInquiry.event_date"
-                                    class="flex items-center gap-4 text-brand-wine"
+                                    class="rounded-md border border-brand-rose/10 bg-white p-5 shadow-sm"
                                 >
-                                    <Calendar
-                                        class="h-4 w-4 shrink-0 text-brand-rose"
-                                    />
-                                    <span class="text-sm font-light"
-                                        >Proposed Date:
-                                        <span class="font-semibold">{{
-                                            selectedInquiry.event_date
-                                        }}</span></span
+                                    <span
+                                        class="mb-2 block text-[0.6rem] font-bold tracking-widest text-brand-rose uppercase"
+                                        >Proposed Date</span
                                     >
+                                    <div
+                                        class="flex items-center gap-3 text-brand-wine"
+                                    >
+                                        <Calendar
+                                            class="h-4 w-4 shrink-0 text-brand-rose/60"
+                                        />
+                                        <span class="text-sm font-semibold">{{
+                                            selectedInquiry.event_date || 'TBD'
+                                        }}</span>
+                                    </div>
+                                </div>
+                                <div
+                                    class="rounded-md border border-brand-rose/10 bg-white p-5 shadow-sm"
+                                >
+                                    <span
+                                        class="mb-2 block text-[0.6rem] font-bold tracking-widest text-brand-rose uppercase"
+                                        >Location</span
+                                    >
+                                    <div
+                                        class="flex items-center gap-3 text-brand-wine"
+                                    >
+                                        <MapPin
+                                            class="h-4 w-4 shrink-0 text-brand-rose/60"
+                                        />
+                                        <span class="text-sm font-semibold">{{
+                                            selectedInquiry.event_location
+                                        }}</span>
+                                    </div>
+                                </div>
+                                <div
+                                    class="rounded-md border border-brand-rose/10 bg-white p-5 shadow-sm"
+                                >
+                                    <span
+                                        class="mb-2 block text-[0.6rem] font-bold tracking-widest text-brand-rose uppercase"
+                                        >Budget & Guests</span
+                                    >
+                                    <div
+                                        class="flex flex-col gap-1 text-brand-wine"
+                                    >
+                                        <div class="flex items-center gap-3">
+                                            <PoundSterling
+                                                class="h-3.5 w-3.5 shrink-0 text-brand-rose/60"
+                                            />
+                                            <span
+                                                class="text-sm font-semibold"
+                                                >{{
+                                                    selectedInquiry.approximate_budget
+                                                }}</span
+                                            >
+                                        </div>
+                                        <div class="flex items-center gap-3">
+                                            <Users
+                                                class="h-3.5 w-3.5 shrink-0 text-brand-rose/60"
+                                            />
+                                            <span
+                                                class="text-xs font-light text-brand-wine/70"
+                                                >{{
+                                                    selectedInquiry.guest_numbers ||
+                                                    'Not specified'
+                                                }}</span
+                                            >
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
+                            <!-- CLIENT MESSAGE -->
                             <div
-                                class="rounded-md border border-brand-rose/10 bg-white p-8 shadow-sm"
+                                class="mb-8 rounded-md border border-brand-rose/10 bg-white p-8 shadow-sm"
                             >
                                 <h4
-                                    class="mb-6 border-b border-brand-rose/10 pb-4 text-[0.65rem] font-bold tracking-widest text-brand-rose uppercase"
+                                    class="mb-4 border-b border-brand-rose/10 pb-4 text-[0.65rem] font-bold tracking-widest text-brand-rose uppercase"
                                 >
                                     Client Message
                                 </h4>
                                 <p
-                                    class="text-lg leading-relaxed font-light whitespace-pre-wrap text-brand-wine/90 selection:bg-brand-rose selection:text-white"
+                                    class="text-base leading-relaxed font-light whitespace-pre-wrap text-brand-wine/90 selection:bg-brand-rose selection:text-white"
                                 >
                                     {{ selectedInquiry.message }}
                                 </p>
                             </div>
+
+                            <!-- REFERRAL INFO -->
+                            <div
+                                class="flex items-center justify-center gap-2 rounded-md border border-brand-rose/10 bg-brand-rose/5 p-4 text-[0.65rem] font-bold tracking-widest text-brand-wine/50 uppercase"
+                            >
+                                <Search class="h-3.5 w-3.5" />
+                                Found us via:
+                                <span class="text-brand-wine">{{
+                                    selectedInquiry.found_us_via
+                                }}</span>
+                            </div>
                         </div>
 
+                        <!-- Pane Footer (Reply Action) -->
                         <div
                             class="flex shrink-0 justify-end border-t border-brand-rose/20 bg-white p-6"
                         >
